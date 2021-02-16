@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="figuras.css">
+    <link rel="stylesheet" href="numerosColores.css">
+
+    <title>Número - expresión numérica</title>
+</head>
+
+<body>
+
+    <p>Así como se llama a las personas por su nombre; como Juan, Jose, Laura, Leny o Yeminith,
+        se llama a los números por su nombre propio. Como \(2, 7, 14, 27\).
+    </p>
+
+    <p>Pero hay distintos modos de referirse a una persona específica. Por ejemplo:</p>
+
+    <ul>
+        <li>Gabriel García Marquez</li>
+        <li>El escritor de Cien años de soledad</li>
+        <li>El esposo de Mercedes Barcha</li>
+        <li>Gabo</li>
+    </ul>
+
+    Todas estas expresiones se refieren a la misma persona.
+
+    <p>De la misma manera, un número puede ser expresado de distintas formas. El número cuatro puede ser escrito como:
+    </p>
+
+    <div class="recuadro">
+        <ul>
+            <li>El número que es tres unidades más grande que el 1</li>
+            <li>El número que es el doble del dos</li>
+            <li>El número que es la mitad del ocho</li>
+        </ul>
+    </div>
+
+    <p>Los matemáticos suelen usar símbolos para hablar así de los números. ¡Click en el cuadrito
+        siguiente para ver esas expresiones escritas en símbolos!
+    </p>
+
+    <div id="cuadroDosVersiones" class="recuadro" v-on:click="toggleContenido">
+        <ul v-show="original">
+            <li>El número que es tres unidades más grande que el 1</li>
+            <li>El número que es el doble del dos</li>
+            <li>El número que es la mitad del ocho</li>
+        </ul>
+
+        <ul v-show="!original">
+            <li>\(1+3\)</li>
+            <li>\( 2 \times 2 \)</li>
+            <li>\( 8 \over 2\)</li>
+        </ul>
+    </div>
+
+    <p>Se llama a estas formas de expresar un número: <span class="rojoSuave resaltado">Expresiones numéricas</span></p>
+
+    <p>
+        Frecuentemente se combinan varias números en forma de expresión numérica para formar otra expresión numérica más
+        grande.
+    </p>
+
+    <p>Por ejemplo, dados los siguientes dos números:</p>
+    <ul>
+        <li>\( 4 \times 3 \)</li>
+        <li>9 +1</li>
+    </ul>
+
+    <p> Para expresar <span class="azulSuave resaltado"> "El número que resulta de sumar esos dos números"</span> se
+        usan paréntesis de la siguiente forma</p>
+    <ul>
+        <li> <span class="azulSuave resaltado">\((4 \times 3) + ( 9+1) \)</span> </li>
+    </ul>
+
+    <p>Esta es una expresión numérica que se forma con dos números que también están en forma de
+        expresión numérica y por eso están identificados con paréntesis.
+    </p>
+
+
+</body>
+
+</html>
+<script>
+
+    var cuadroDosVersiones = new Vue({
+        el: '#cuadroDosVersiones',
+        data: {
+            original: true,
+        },
+        methods: {
+            toggleContenido() {
+                this.original = !this.original;
+            }
+        },
+        computed: {
+        }
+    })
+</script>
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    .epigrafe {
+        font-style: italic;
+        font-size: 11px;
+    }
+
+    .bControl {
+        padding: 3px 5px;
+        border-radius: 5px;
+        border: 2px solid purple;
+        cursor: pointer;
+    }
+
+    .bControl:hover {
+        background-color: rgb(178, 252, 178);
+    }
+
+    .textoCreciente {
+        border: 2px solid red;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .expresionCreciente {
+        border: 2px solid red;
+        border-radius: 50%;
+        padding: 10px;
+        width: 130px;
+        height: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px auto;
+        background-color: orange;
+    }
+
+    #cuadroDosVersiones {
+        cursor: pointer;
+    }
+</style>

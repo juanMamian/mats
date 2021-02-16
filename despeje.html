@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="numerosColores.css">
+    <title>Despeje</title>
+</head>
+
+<body>
+    <div id="doc">
+        <p>Cuando una incógnita está sola en uno de los miembros de una ecuación, se dice
+            que está despejada.
+        </p>
+
+        <p>Como en el siguiente ejemplo</p>
+
+        <ul>
+            <li>\({a}= {{3 \times 8 + 2} \over 4} \)</li>
+        </ul>
+
+        <p>Esta ecuación afirma que la incógnita \(a\) es igual de grande que
+            la expresión numérica que aparece en el miembro de la derecha. Así que al conocer
+            el valor de esa expresión numérica, se descubre también el valor de la incógnita.
+        </p>
+
+
+
+        <p>Si en una ecuación hay una incógnita que no está despejada, se puede intentar
+            producir una nueva ecuación a partir de la primera en la cual la incógnita
+            sí esté despejada</p>
+
+        <p>Para eso se combina el método de crear nuevas igualdades a partir de igualdades
+            anteriores con la cancelación de operaciones.
+        </p>
+
+        <p>Como en el siguiente ejemplo: </p>
+
+        <ul>
+            <li v-pre>
+                \( a \times 3 = {7 \over 2 } + 5 \)
+            </li>
+        </ul>
+
+        <p>
+            Si se decide dividir en 3 ambos miembros, se obtiene una nueva ecuación así:
+        </p>
+
+        <ul>
+            <li>
+                <span class="miembroEcuacion" v-bind:style="colorMiembroI1">
+                    <span v-pre>
+                        \( {a \times 3} \over 3 \)
+                    </span>
+                </span>
+                <span v-pre>
+                    \(= \)
+                </span>
+                <span v-pre>
+                    \({{7 \over 2 } + 5} \over 3 \)
+                </span>
+            </li>
+        </ul>
+
+        <p>En el <span v-on:mouseenter="mostrandoMiembroI1=true" v-on:mouseleave="mostrandoMiembroI1=false"
+                class="resaltadoHorizontal" style="background-color: chocolate;">miembro izquierdo</span> hay dos
+            operaciones contrarias que se ejecutan una
+            después de la otra: la multiplicación por 3 y la división en 3.
+            Esas dos operaciones se cancelan, así que la ecuación puede
+            escribirse sin ellas. Así:
+        </p>
+        <ul>
+            <li>
+                <span class="miembroEcuacion" v-bind:style="colorMiembroI2">
+                    <span v-pre>
+                        \( a \)
+                    </span>
+                </span>
+                <span v-pre>
+                    \(= \)
+                </span>
+                <span class="miembroEcuacion" v-bind:style="colorMiembroD2">
+                    <span v-pre>
+                        \({{7 \over 2 } + 5} \over 3 \)
+                    </span>
+                </span>
+            </li>
+        </ul>
+
+        <p>En ésta ecuación, \( a \) está <span style="font-style: italic;">despejada</span> </p>
+
+</body>
+
+</html>
+
+<script>
+
+</script>
+
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        padding: 2% 5%;
+    }
+
+    .miembroEcuacion {
+        height: 40px;
+        display: inline-block;
+        padding: 10px 5px;
+        border-radius: 5px;
+    }
+
+    #ejemploAnimado {
+        justify-items: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(4);
+        align-items: center;
+        row-gap: 30px;
+    }
+
+    #botonesControl {
+        display: flex;
+        justify-content: center;
+        width: 250px;
+        margin: 20px auto;
+        grid-column: 1/3;
+    }
+
+    .botonStep {
+        border-radius: 10px;
+        border: 1px solid rgb(0, 0, 51);
+        cursor: pointer;
+        background-color: rgb(63, 247, 247);
+        width: 130px;
+        height: 40px;
+        text-align: center;
+        margin: 10px 10px;
+    }
+
+    .fadeIn-enter {
+        opacity: 0.7;
+    }
+
+    .comentario {
+        grid-column: 2/3;
+    }
+
+    .fadeIn-enter-active {
+        transition: opacity 1s;
+    }
+</style>

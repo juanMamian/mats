@@ -1,0 +1,32 @@
+.rojo {
+    background-color: red;
+}
+.rojoSuave {
+    background-color: rgb(235, 42, 42);
+}
+
+.verde {
+    background-color: green;
+}
+
+.verdeSuave{
+    background-color: rgb(66, 192, 66);
+}
+
+.azul {
+    background-color: blue;
+}
+.azulSuave{
+    background-color: rgb(116, 153, 255);
+
+}
+
+.resaltado {
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.resaltadoHorizontal{
+    padding-left: 3px;
+    padding-right: 3px;
+}

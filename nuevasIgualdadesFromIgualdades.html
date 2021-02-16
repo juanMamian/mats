@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="figuras.css">
+    <title>Nuevas igualdades a partir de igualdades</title>
+</head>
+
+<body>
+    <div id="doc">
+
+        <p> Si se sabe que dos números son iguales, como es el caso de:</p>
+
+        <ul>
+            <li>\(4 \times 2 \)</li>
+            <li>\(11 - 3 \)</li>
+        </ul>
+
+        Se puede escribir la igualdad:
+        <ul>
+            <li><span>\(4 \times 2 \) </span><span>\( = \)</span><span>\(11-3 \)</span></li>
+        </ul>
+        <div class="recuadro">
+            <p>También se puede afirmar que, ya que los dos números son iguales, la mitad del
+                primer número es igual que la mitad del segundo número.
+            </p>
+
+            <ul>
+                <li><span>\({4 \times 2} \over 2 \) </span><span>\( = \)</span><span>\({11-3} \over 2 \)</span></li>
+            </ul>
+
+            <p>Que es una nueva igualdad.</p>
+        </div>
+        <div class="recuadro">
+            <p>O que al sumar el primer número con 8, se obtiene un número igual al resultado
+                de sumar el segundo número con 8.
+            </p>
+
+            <ul>
+                <li><span>\({4 \times 2}+8 \) </span><span>\( = \)</span><span>\((11-3)+8 \)</span></li>
+            </ul>
+
+            <p>Que es una nueva igualdad</p>
+
+        </div>
+
+        <p>En general, si los dos primeros números son iguales y se aplica
+            la misma operación matemática a cada uno, los dos resultados serán iguales entre sí,
+            lo cual se puede escribir bajo la forma de una nueva igualdad.
+        </p>
+
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                stepExpresion1: 0,
+            }
+        }
+    })
+</script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+    .recuadro{
+        width: 80%;
+    }
+</style>
