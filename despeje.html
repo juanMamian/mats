@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link rel="stylesheet" href="numerosColores.css">
+    <link rel="stylesheet" href="animacionesVue.css">
+    <link rel="stylesheet" href="figuras.css">
     <title>Despeje</title>
 </head>
 
@@ -17,86 +20,137 @@
             que está despejada.
         </p>
 
-        <p>Como en el siguiente ejemplo</p>
+        <p>Como en el siguiente ejemplo:</p>
 
         <ul>
-            <li>\({a}= {{3 \times 8 + 2} \over 4} \)</li>
+            <li>\({r}= {{3 \times 8 + 2} \over 4} \)</li>
         </ul>
 
-        <p>Esta ecuación afirma que la incógnita \(a\) es igual de grande que
+        <p>Esta ecuación afirma que la incógnita \(r\) es igual de grande que
             la expresión numérica que aparece en el miembro de la derecha. Así que al conocer
             el valor de esa expresión numérica, se descubre también el valor de la incógnita.
         </p>
 
-
-
-        <p>Si en una ecuación hay una incógnita que no está despejada, se puede intentar
-            producir una nueva ecuación a partir de la primera en la cual la incógnita
-            sí esté despejada</p>
-
-        <p>Para eso se construye una nueva ecuación en la cual ocurra una cancelación de operaciones.
-        </p>
-
-        <p>Como en el siguiente ejemplo: </p>
+        <p>Frecuentemente, en las ecuaciones la incógnita no está despejada. Como en el siguiente ejemplo.</p>
 
         <ul>
             <li v-pre>
-                \( a \times 3 = {7 \over 2 } + 5 \)
+                \( m \times 3 = {7 \over 2 } + 5 \)
             </li>
         </ul>
 
         <p>
-            Si se decide dividir en 3 ambos miembros, se obtiene una nueva ecuación así:
+            Si se logra construir una nueva ecuación a partir de esta, en la cual la incógnita
+            esté despejada, será posible descubrir el valor de la incógnita.
         </p>
 
-        <ul>
-            <li>
-                <span class="miembroEcuacion" v-bind:style="colorMiembroI1">
-                    <span v-pre>
-                        \( {a \times 3} \over 3 \)
-                    </span>
-                </span>
-                <span v-pre>
-                    \(= \)
-                </span>
-                <span v-pre>
-                    \({{7 \over 2 } + 5} \over 3 \)
-                </span>
-            </li>
-        </ul>
-
-        <p>En el <span v-on:mouseenter="mostrandoMiembroI1=true" v-on:mouseleave="mostrandoMiembroI1=false"
-                class="resaltadoHorizontal" style="background-color: chocolate;">miembro izquierdo</span>,
-            la multiplicación por 3 y la división en 3 
-            se cancelan, así que la ecuación puede
-            escribirse sin ellas. Así:
+        <p>Para esto, se construye una nueva ecuación en la cual ocurra una
+            cancelación de operaciones.
         </p>
-        <ul>
-            <li>
-                <span class="miembroEcuacion" v-bind:style="colorMiembroI2">
-                    <span v-pre>
-                        \( a \)
+
+        <div id="ejemplo1">
+            <button class="botonEjemplo1 botonEjemplo" v-on:click="stepEjemplo1===0?stepEjemplo1=1:stepEjemplo1=0">
+                {{stepEjemplo1===0?'iniciar':'reiniciar'}}
+            </button>
+            <transition name="caer">
+                <div class="ecuacionEjemplo1 ecuacionEjemplo" v-show="stepEjemplo1>0">
+                    <transition name="fade">
+                        <span>
+                            \( m \times 3\)
+                        </span>
+                    </transition>
+
+                    <span>
+                        \(= \)
                     </span>
-                </span>
-                <span v-pre>
-                    \(= \)
-                </span>
-                <span class="miembroEcuacion" v-bind:style="colorMiembroD2">
-                    <span v-pre>
+
+                    <transition name=fade>
+                        <span>
+                            \({7 \over 2 } + 5 \)
+                        </span>
+                    </transition>
+                </div>
+            </transition>
+            <transition name="caer">
+                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1>=1">
+                    Esta es la ecuación original.
+                </div>
+            </transition>
+
+            <button class="botonEjemplo1 botonEjemplo botonPaso0" v-on:click="stepEjemplo1=2" v-show="stepEjemplo1>=1">
+                Crear una nueva ecuación aplicando división entre 3 a los miembros
+                de la ecuación original.
+            </button>
+
+            <transition name="caer">
+                <div class="ecuacionEjemplo1 ecuacionEjemplo" v-show="stepEjemplo1>=2">
+                    <div class="bloqueConvertible" :class="{marco:stepEjemplo1===3}">
+                        <span class="bloquePlaceholder">
+                            \( {m \times 3} \over 3 \)
+                        </span>
+                        <transition name=fade>
+                            <span class="convertible original" v-show="stepEjemplo1<4">
+                                \( {m \times 3} \over 3 \)
+                            </span>
+                        </transition>
+
+                        <transition name=fade>
+                            <span class="convertible conversion" v-show="stepEjemplo1>=4" style="left:40px ;">
+                                \( m \)
+                            </span>
+                        </transition>
+                    </div>
+
+                    <span>
+                        \(= \)
+                    </span>
+
+                    <span>
                         \({{7 \over 2 } + 5} \over 3 \)
                     </span>
-                </span>
-            </li>
-        </ul>
+                </div>
+            </transition>
 
-        <p>En ésta ecuación, \( a \) está <span style="font-style: italic;">despejada</span> </p>
+            <transition name="caer">
+                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1===2">
+                    Nueva ecuación.
+                </div>
+            </transition>
 
+            <transition name="entrarPorDerecha">
+                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1===3">
+                    En este miembro hay operaciones contrarias consecutivas: se cancelan.
+                </div>
+            </transition>
+
+            <transition name="entrarPorDerecha">
+                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1>=4">
+                    Ahora \(m\) está despejada.
+                </div>
+            </transition>
+            <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1===2" v-on:click="stepEjemplo1=3">
+                Analizar operaciones </button>
+            <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1>=3"
+                v-on:click="stepEjemplo1<4?stepEjemplo1=4:stepEjemplo1=3">
+                {{ stepEjemplo1 < 4?'Ignorar operaciones que se cancelan': 'Deshacer' }} </button>
+
+        </div>
+
+        
+    </div>
 </body>
 
 </html>
 
 <script>
-
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                stepEjemplo1: 0,
+            }
+        }
+    })
 </script>
 
 
@@ -144,15 +198,48 @@
         margin: 10px 10px;
     }
 
-    .fadeIn-enter {
-        opacity: 0.7;
+
+
+    #ejemplo1 {
+        border: 2px solid blueviolet;
+        border-radius: 20px;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 10px;
     }
 
-    .comentario {
+    .ecuacionEjemplo {
+        grid-column: 1/2;
+    }
+
+    .comentarioEjemplo {
         grid-column: 2/3;
     }
 
-    .fadeIn-enter-active {
-        transition: opacity 1s;
+    .botonEjemplo {
+        grid-column: 1/3;
+        max-width: 600px;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .bloqueConvertible {
+        position: relative;
+        display: inline-block;
+        min-width: 100px;
+    }
+
+    .convertible {
+        position: absolute;
+
+    }
+
+    .bloquePlaceholder {
+        visibility: hidden;
+    }
+
+    .botonPaso0 {
+        grid-row: 3/4;
     }
 </style>

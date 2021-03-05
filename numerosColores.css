@@ -31,3 +31,8 @@
     padding-right: 3px;
     border-radius: 3px;
 }
+
+.sublinea{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="numerosColores.css">
+    <link rel="stylesheet" href="figuras.css">
+
+    <title>Recta numérica</title>
+</head>
+
+<body>
+    <div id="doc">
+        <p tabindex="0">La recta numérica es un modo de imaginar a los números como puntos organizados
+            uno al lado del otro a lo largo de una línea.
+        </p>
+        <br>
+        <br>
+        <div id="contenedorRectaNumerica" tabindex="0">
+            <div id="linea">
+                <div class="numero" v-for="index in parseInt(cantNumeros)" :key="(index-1+minNumero)"
+                    :style="{left: factorGap*(index-1)+'px'}">
+                    <div class="etiquetaNumero">
+                        {{index-1+minNumero}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p>El número cero es llamado el orígen.</p>
+
+    <p>Hacia su derecha se ubican los números que conocemos: 1, 2, 3, etc. Se llaman números positivos.</p>
+
+    <p>Hacia su izquierda también hay números. Por estar ubicados en la dirección
+        contraria, se los llama Los números negativos. Se escriben con el símbolo <span class="resaltadoHorizontal"
+            style="background-color: darkcyan;">\(-\)</span>.
+    </p>
+
+    <p>La recta numérica se extiende indefinidamente hacia la derecha y hacia la izquierda.</p>
+
+</body>
+
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                minNumero: -5,
+                maxNumero: 15,
+                factorGap: 50,
+            }
+        },
+        computed: {
+            cantNumeros() {
+                return this.maxNumero - this.minNumero;
+            },
+        }
+    })
+</script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    #contenedorRectaNumerica {
+        overflow-x: scroll;
+        overflow-y: visible;
+        height: 100px;
+        padding: 50px 10px;
+        position: relative;
+    }
+
+    #linea {
+        height: 3px;
+        width: 1120px;
+        border-radius: 2px;
+        background-color: gray;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        position: relative;
+        overflow: visible;
+    }
+
+    .numero {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: cadetblue;
+        margin: 0px 9px;
+        transform: translateY(-30%);
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .numero:hover>.etiquetaNumero {
+        display: block;
+    }
+
+    .etiquetaNumero {
+        position: absolute;
+
+        left: 50%;
+        transform: translate(-50%, -110%);
+        background-color: rgb(245, 190, 151);
+        border: 2px solid rgb(54, 24, 3);
+        border-radius: 15px;
+        padding: 5px 10px;
+        display: none;
+    }
+</style>

@@ -9,6 +9,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="figuras.css">
+    <link rel="stylesheet" href="animacionesVue.css">
     <title>Nuevas igualdades a partir de igualdades</title>
 </head>
 
@@ -26,27 +27,75 @@
         <ul>
             <li><span>\(4 \times 2 \) </span><span>\( = \)</span><span>\(11-3 \)</span></li>
         </ul>
-        <div class="recuadro">
-            <p>También se puede afirmar que, ya que los dos números son iguales, la mitad del
-                primer número es igual que la mitad del segundo número.
-            </p>
 
-            <ul>
-                <li><span>\({4 \times 2} \over 2 \) </span><span>\( = \)</span><span>\({11-3} \over 2 \)</span></li>
-            </ul>
+        <p>Es posible construir otros números a partir de estos dos, que también sean iguales. Así:</p>
 
-            <p>Que es una nueva igualdad.</p>
-        </div>
-        <div class="recuadro">
-            <p>O que al sumar el primer número con 8, se obtiene un número igual al resultado
-                de sumar el segundo número con 8.
-            </p>
+        <div id="ejemplo1">
 
-            <ul>
-                <li><span>\({4 \times 2}+8 \) </span><span>\( = \)</span><span>\((11-3)+8 \)</span></li>
-            </ul>
+            <button class="botonEjemplo1 botonEjemplo botonAnchoCompleto"
+                v-on:click="stepEjemplo1>0?stepEjemplo1=0:stepEjemplo1=1; ejemplo1Mitad1Construida=false; ejemplo1Mitad2Construida=false">
+                {{stepEjemplo1===0?'Iniciar':'Reiniciar'}}
+            </button>
 
-            <p>Que es una nueva igualdad</p>
+            <transition name="caer" v-on:after-enter="stepEjemplo1=2">
+                <div class="divAnchoCompleto" v-show="stepEjemplo1>=1">\( {4 \times 2} = {11 - 3} \)</div>
+            </transition>
+
+            <transition name="fade">
+                <div v-show="stepEjemplo1>=2" class="divAnchoCompleto marco conclusion">Esta es la igualdad que ya se
+                    conoce</div>
+            </transition>
+
+            <transition name="fadeLimpio">
+                <button class="botonEjemplo1 botonEjemplo botonAnchoCompleto" v-show="stepEjemplo1>=2"
+                    v-on:click="stepEjemplo1=3">
+                    Continuar
+                </button>
+            </transition>
+
+            <transition name="fadeRapidoLimpio">
+                <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1>=3"
+                    v-on:click="ejemplo1Mitad1Construida=true">
+                    Construir el número "La mitad de \( (4 \times 2) \)"
+                </button>
+            </transition>
+
+            <transition name="fadeRapidoLimpio">
+                <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1>=3"
+                    v-on:click="ejemplo1Mitad2Construida=true">
+                    Construir el número "La mitad de \( (11 - 3) \)"
+                </button>
+            </transition>
+
+            <transition name="caer">
+                <div class="columnaIzquierda" v-show="ejemplo1Mitad1Construida===true">\( {(4 \times 2)} \over 2 \)</div>
+            </transition>
+
+            <transition name="caer">
+                <div class="columnaDerecha" v-show="ejemplo1Mitad2Construida===true">\( {(11 - 3)} \over 2 \)</div>
+            </transition>
+
+            <transition name="fadeRapidoLimpio">
+                <button class="botonEjemplo1 botonEjemplo botonAnchoCompleto"
+                    v-show="ejemplo1Mitad1Construida==true && ejemplo1Mitad2Construida==true && stepEjemplo1>=3"
+                    v-on:click="stepEjemplo1=4">
+                    Si los dos números originales son iguales... ¡Sus mitades también son iguales!
+                </button>
+            </transition>
+
+            <transition name="caer" v-on:after-enter="stepEjemplo1=5">
+                <div class="divAnchoCompleto"
+                v-show="stepEjemplo1>=4"
+                >
+                    \( {{(4 \times 2)} \over 2} = {{(11 - 3)} \over 2} \)</div>
+            </transition>
+
+            <transition name="fade">
+                <div class="divAnchoCompleto marco conclusion"
+                v-show="stepEjemplo1>=5"
+                >
+                    ¡Esta es una nueva igualdad!</div>
+            </transition>
 
         </div>
 
@@ -66,7 +115,9 @@
         el: "#doc",
         data() {
             return {
-                stepExpresion1: 0,
+                stepEjemplo1: 0,
+                ejemplo1Mitad1Construida: false,
+                ejemplo1Mitad2Construida: false
             }
         }
     })
@@ -76,7 +127,46 @@
     body {
         padding: 2% 5%;
     }
-    .recuadro{
+
+    .recuadro {
         width: 80%;
+    }
+
+    #ejemplo1 {
+        border: 2px solid blueviolet;
+        border-radius: 20px;
+        padding: 10px;
+        padding-bottom: 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 10px;
+        justify-items: center;        
+    }
+
+    .botonAnchoCompleto {
+        grid-column: 1/3;
+    }
+
+    .botonEjemplo {
+        max-width: 600px;
+        margin: 10px auto;
+        padding: 10px 20px;
+    }
+
+    .divAnchoCompleto {
+        grid-column: 1/3;
+    }
+
+    .conclusion {
+        padding: 5px 10px;
+        border-radius: 10px;
+        background-color: rgb(87, 196, 87);
+    }
+
+    .columnaDerecha{
+        grid-column: 2/3;
+    }
+    .columnaIzquierda{
+        grid-column: 1/2;
     }
 </style>
