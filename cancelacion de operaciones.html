@@ -11,18 +11,20 @@
 
     <link rel="stylesheet" href="transformaciones.css">
     <link rel="stylesheet" href="animacionesVue.css">
+    <link rel="stylesheet" href="figuras.css">
+    <link rel="stylesheet" href="numerosColores.css">
     <title>Cancelación de operaciones</title>
 </head>
 
 <body>
     <div id="doc">
-        <p>Cuando una expresión numérica contiene operaciones opuestas consecutivas, eliminar ambas
-            operaciones
-            de la expresión no cambia su resultado.
+        <p>Cuando una expresión numérica contiene operaciones opuestas consecutivas, 
+            se puede reescribir sin esas dos operaciones. La nueva expresión tiene el mismo valor
+            que la expresión original. 
         </p>
 
-        <p>Eliminar operaciones matemáticas opuestas de una expresión sabiendo que el resultado
-            de la expresión no cambiará, es llamado <span class="resaltadoHorizontal"
+        <p>Reescribir una expresión numérica ignorando operaciones opuestas es llamado
+             <span class="resaltadoHorizontal"
                 style="background-color: cadetblue;">Cancelar</span>
         </p>
 
@@ -83,9 +85,9 @@
         </div></transition>                
     </div>
 
-    <p>Cancelar operaciones contrarias consecutivas no cambia el valor de la expresión.
-        Sólo cambia su forma.
-    </p>
+    <div class="recuadro conclusion">Cancelar produce una nueva expresión más simple
+        pero con el mismo valor que la original.
+    </div>
 </body>
 
 </html>
@@ -150,5 +152,15 @@
 
     .bCancelarOperaciones {
         grid-column: 2/3;
+    }
+
+    .conclusion{
+        text-align: center;
+        font-size: 16px;
+        padding: 5px 100px;
+        background-color: rgb(190, 241, 190);
+        margin: 10px auto;
+        width: 60%;
+        display: block;
     }
 </style>
