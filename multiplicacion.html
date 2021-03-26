@@ -23,45 +23,9 @@
 
         <p>Multiplicación significa repetición. Así que multiplicar un número significa repetirlo.</p>
 
-        <p>En el siguiente ejemplo puedes multiplicar un número representado por bolitas.</p>
+        <p>En la sección "El juego de la multiplicación" puedes multiplicar números representado por bolitas.</p>
 
-        <div id="ejemplo1">
-            <div v-show="stepMultiplicacion==0">Escoge un número</div>
-            <div v-show="stepMultiplicacion==0">Escoge cuantas veces lo quieres repetir (Multiplicar).</div>
-
-            <input v-show="stepMultiplicacion==0" type="range" min="1" max="9" v-model="numero1">
-            <input v-show="stepMultiplicacion==0" type="range" min="1" max="5" v-model="multiplicador">
-
-            <div v-show="stepMultiplicacion==0" id="numero1">
-                {{numero1}}
-            </div>
-
-            <div class="columnaDerecha" id="multiplicador">
-                <span :key="'num'+versionMultiplicacion" v-show="stepMultiplicacion>=2">\( {{numero1}} \times {{multiplicador}} \)</span> <span v-show="stepMultiplicacion<=1">{{multiplicador}}</span> 
-            </div>
-
-
-
-            <transition name="salirPorDerecha">
-                <div id="dibujoNumero1" v-show="stepMultiplicacion==0">
-                    <div v-for="numero in parseInt(numero1)" class="bolita"></div>
-                </div>
-            </transition>
-
-
-            <div id="dibujoMultiplicador" class="columnaDerecha" :class="{recuadrito:stepMultiplicacion>=2}">
-                <div class="cuadrito" :class="{recuadrito: stepMultiplicacion <2 }" v-for="numero in parseInt(multiplicador)">
-                    <transition name="entrarPorIzquierda" v-on:after-enter="stepMultiplicacion=2">
-                        <div class="bolitasEnCuadrito" v-show="stepMultiplicacion>=1">
-                            <div class="bolita" v-for="bolitaI in parseInt(numero1)"></div>
-                        </div>
-                    </transition>
-                </div>
-            </div>
-
-            <button id="bMultiplicar" class="transversal" v-on:click="multiplicar" v-show="stepMultiplicacion==0">¡Multiplicar!</button>
-            <button v-show="stepMultiplicacion>=1" class="transversal" v-on:click="stepMultiplicacion=0">Reiniciar</button>
-        </div>
+        
 
     </div>
 </body>
@@ -71,25 +35,7 @@
 <script>
     const doc = new Vue({
         el: "#doc",
-        data() {
-            return {
-                numero1: 3,
-                multiplicador: 1,
-                stepMultiplicacion:0,
-                multiplicado: false,
-                versionMultiplicacion:0,
-            }
-        },
-        methods:{
-            multiplicar: function(){
-                this.versionMultiplicacion++;
-                this.$nextTick(()=>{
-                    MathJax.typeset();
-                    this.stepMultiplicacion=1;
-                })
-                
-            }
-        }
+        
     })
 </script>
 
