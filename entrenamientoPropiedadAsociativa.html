@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="numerosColores.css">
     <link rel="stylesheet" href="figuras.css">
-    <title>Entrenamiento propiedad distributiva</title>
+    <title>Entrenamiento propiedad asociativa</title>
 </head>
 
 <body>
@@ -30,8 +30,8 @@
             </div>
 
             <div class="instruccion recuadro" v-show="expresionGenerada">
-                ¡Realiza distribuciones (Si es posible) para crear una nueva expresión numérica de igual valor
-                a la expresión original!
+                ¡Reescribe la expresión cambiando de lugar los paréntesis de forma que obtengas una nueva expresión numérica de igual valor
+                a la expresión original (Si es posible)!
             </div>
 
             <div class="nota recuadro" v-show="expresionGenerada">
@@ -60,16 +60,16 @@
                 expresionOriginal: null,
                 versionExpresionOriginal: 0,
 
-                probDistribuible: 0.5,
-
                 expresionGenerada: false,
+
+                probAsociable:0.5,
 
             }
         },
         methods: {
             generarExpresionOriginal() {
+                this.probAsociable=0.5;
                 var dif = this.dificultad;
-                this.probDistribuible = 0.5;
                 var numero1 = this.generarNumero(parseInt(dif));
                 dif--;
                 var numero2 = this.generarNumero(parseInt(dif));
@@ -83,14 +83,14 @@
 
                 var { opPrimaria, opSecundaria } = this.generarOperaciones();
 
-                var expresion = numero1 + opPrimaria + numero2;
-
-                if (this.probDistribuible == 0.5) {
+                var expresion = numero1 + opPrimaria + numero2;   
+                
+                if (this.probAsociable == 0.5) {
+                    console.log(`Creando posiblidad de asociación en primer nivel`);
                     var numero3 = this.generarNumero(parseInt(dif));
-                    var expresion = "{({" + expresion + "})}" + opSecundaria + numero3;
+                    var expresion = "{({" + expresion + "})}" + opPrimaria + numero3;
                 }
 
-                console.log(`Expresión final: ${expresion}`);
                 this.expresionOriginal = "\\(" + expresion + "\\)";
 
                 this.versionExpresionOriginal++;
@@ -103,29 +103,25 @@
             generarNumero(dif) {
                 // console.log(`Generando número con dif: ${dif}`);
                 const compuesto = (dif > 1);
+                var asociable=(Math.random()<this.probAsociable);
                 if (compuesto) {
                     var distribuible = (Math.random() < this.probDistribuible);
                     console.log(`Compuesto`);
                     var numero1 = this.generarNumero(dif - 1);
                     dif--;
                     var numero2 = this.generarNumero(dif - 1);
-                    dif--;
-                    if (Math.random() > 0.5) {
-                        //Intercambiar el valor de las variables
-                        var temp = numero1;
-                        numero1 = numero2;
-                        numero2 = temp;
-                    }
-
+                    dif--;                  
                     var { opPrimaria, opSecundaria } = this.generarOperaciones();
 
-                    var numeroCompuesto = "{({" + numero1 + opPrimaria + numero2 + "})}";
-                    if (distribuible) {
+                    var numeroCompuesto = "{({" + numero1 + opPrimaria + numero2 + "})}";   
+                    
+                    if (asociable) {
+                        console.log(`Compuesto asociable`);
                         var numero3 = this.generarNumero(dif - 1);
-                        numeroCompuesto = "{({" + numeroCompuesto + opSecundaria + numero3 + "})}";
-                        this.probDistribuible = this.probDistribuible / 2;
+                        numeroCompuesto = "{({" + numeroCompuesto + opPrimaria + numero3 + "})}";
+                        this.probAsociable = this.probAsociable / 2;
                     }
-                    console.log(numeroCompuesto);
+
                     return numeroCompuesto;
                 }
                 else {
@@ -139,7 +135,6 @@
                 var opPrimaria = " + ";
                 var opSecundaria = " + ";
 
-                console.log(`Generando operacion ${rand1} y ${rand2}`);
                 if (rand1 < 1) {
                     opPrimaria = " + ";
                 }
@@ -165,8 +160,7 @@
                 else if (rand2 < 4) {
                     opSecundaria = " \\over "
                 }
-
-                console.log(`Generadas: ${opPrimaria} y ${opSecundaria}`);
+                
                 return { opPrimaria, opSecundaria };
             }
         }

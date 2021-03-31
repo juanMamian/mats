@@ -40,12 +40,19 @@
         </ul>
 
         <p>
-            Si se logra construir una nueva ecuación a partir de esta, en la cual la incógnita
+            Si se logra construir una nueva ecuación equivalente a esta, en la cual la incógnita
             esté despejada, será posible descubrir el valor de la incógnita.
         </p>
 
-        <p>Para esto, se construye una nueva ecuación en la cual ocurra una
-            cancelación de operaciones.
+        <p>Para esto se sigue la siguiente estrategia:</p>
+
+        <ul>
+            <li>Construir una nueva ecuación equivalente en la cual haya operaciones opuestas en el miembro donde está la incógnita.</li>
+            <li>Cancelar las operaciones opuestas.</li>
+        </ul>
+
+        <p>En el ejemplo, el miembro donde está la incógnita es \(m \times 3 \).
+            Para cancelar esa multiplicación por 3 hace falta una división entre 3.    
         </p>
 
         <div id="ejemplo1">
@@ -66,7 +73,7 @@
 
                     <transition name=fade>
                         <span>
-                            \({7 \over 2 } + 5 \)
+                            \(({7 \over 2 }) + 5 \)
                         </span>
                     </transition>
                 </div>
@@ -83,31 +90,28 @@
             </button>
 
             <transition name="caer">
-                <div class="ecuacionEjemplo1 ecuacionEjemplo" v-show="stepEjemplo1>=2">
-                    <div class="bloqueConvertible" :class="{marco:stepEjemplo1===3}">
-                        <span class="bloquePlaceholder">
-                            \( {m \times 3} \over 3 \)
-                        </span>
+                <div class="ecuacionEjemplo1 ecuacionEjemplo" id="ecuacionConvertible1" v-show="stepEjemplo1>=2">
+                    <div class="bloqueConvertible" :class="{marco:stepEjemplo1===3}">                        
                         <transition name=fade>
-                            <span class="convertible original" v-show="stepEjemplo1<4">
-                                \( {m \times 3} \over 3 \)
-                            </span>
+                            <div class="convertible original" v-show="stepEjemplo1<4">
+                                \( ({m \times 3}) \over 3 \)
+                            </div>
                         </transition>
 
                         <transition name=fade>
-                            <span class="convertible conversion" v-show="stepEjemplo1>=4" style="left:40px ;">
+                            <div class="convertible conversion" v-show="stepEjemplo1>=4" style="left:40px ;">
                                 \( m \)
-                            </span>
+                            </div>
                         </transition>
                     </div>
 
-                    <span>
+                    <div>
                         \(= \)
-                    </span>
+                    </div>
 
-                    <span>
-                        \({{7 \over 2 } + 5} \over 3 \)
-                    </span>
+                    <div>
+                        \(({({7 \over 2 }) + 5}) \over 3 \)
+                    </div>
                 </div>
             </transition>
 
@@ -117,13 +121,13 @@
                 </div>
             </transition>
 
-            <transition name="entrarPorDerecha">
+            <transition name="entrarPorIzquierda">
                 <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1===3">
-                    En este miembro hay operaciones contrarias consecutivas: se cancelan.
+                    En este miembro hay operaciones contrarias consecutivas: Si se cancelan, el valor del miembro no cambia.
                 </div>
             </transition>
 
-            <transition name="entrarPorDerecha">
+            <transition name="entrarPorIzquierda">
                 <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1>=4">
                     Ahora \(m\) está despejada.
                 </div>
@@ -132,7 +136,7 @@
                 Analizar operaciones </button>
             <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1>=3"
                 v-on:click="stepEjemplo1<4?stepEjemplo1=4:stepEjemplo1=3">
-                {{ stepEjemplo1 < 4?'Ignorar operaciones que se cancelan': 'Deshacer' }} </button>
+                {{ stepEjemplo1 < 4?'¡Cancelar!': 'Deshacer' }} </button>
 
         </div>
 
@@ -224,15 +228,20 @@
         padding: 10px;
     }
 
+    #ecuacionConvertible1{
+        display: flex;
+    }
+
     .bloqueConvertible {
         position: relative;
-        display: inline-block;
         min-width: 100px;
+        min-height: 20px;        
     }
 
     .convertible {
         position: absolute;
-
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .bloquePlaceholder {

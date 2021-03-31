@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="animacionesVue.css">
+    <title>Ejemplos sobre resolver ecuaciones primer grado</title>
+</head>
+
+<body>
+    <div id="doc">
+
+        <div class="ejemplo">
+
+            <div class="ecuacion ecuacionOriginal">
+                \(3(k+2) = 39\)
+            </div>
+
+            <button class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=1">Reescribir el miembro de la izquierda
+                de acuerdo con la propiedad distributiva</button>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=1" v-show="stepEjemplo1>=1">
+                \( 3k + 3 \cdot 2 = 39\)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=1" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=2">Escribir
+                    una ecuación equivalente aplicando una resta de \( ( 3 \cdot 2 ) \)
+                    en los miembros de la ecuación anterior.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=2">
+                \( 3k + 3 \cdot 2 - 3 \cdot 2 = 39 -3 \cdot 2 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=2" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=3">Cancelar
+                    operaciones opuestas en el miembro de la izquierda
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=3">
+                \( 3k = 39 -3 \cdot 2 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=3" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=4">Conmutar
+                    los
+                    números de \( 3k \) de acuerdo con la propiedad conmutativa.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=4">
+                \( k \cdot 3 = 39 -3 \cdot 2 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=4" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=5">Escribir
+                    una
+                    ecuación equivalente aplicando una división entre \( 3 \)
+                    en los miembros de la ecuación anterior.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=5">
+                \( { {k \cdot 3} \over 3} = { {39 -3 \cdot 2} \over 3} \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=5" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=6">Cancelar
+                    operaciones opuestas en el miembro de la izquierda</button>
+            </transition>
+
+
+            <div class="ecuacion" v-show="stepEjemplo1>=6">
+                \( k = { {39 -3 \cdot 2} \over 3} \)
+            </div>
+        </div>
+<!--  -->
+<!--  -->
+        <div class="ejemplo">
+
+            <div class="ecuacion ecuacionOriginal">
+                \({2m \over 3} = 39 + 3m\)
+            </div>
+
+            <div class="observacion">
+                <img src="alerta.png" alt="alerta" width="25px">
+                En esta ecuación la incógnita está en ambos miembros de la ecuación. Un primer objetivo
+                es lograr que esté en uno solo de los miembros.                
+            </div>
+
+            <button class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=1">Escribir una ecuación equivalente
+                aplicando una resta de \(3m\) en ambos miembros de la ecuación.
+            </button>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=1" v-show="stepEjemplo2>=1">
+                \({2m \over 3}-3m = 39 + 3m -3m\)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=1" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=2">Cancelar operaciones
+                    opuestas en el miembro de la derecha.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=2">
+                \({2m \over 3}-3m = 39 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=2" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=3">
+                    Conmutar los números de las expresiones \( 2m \) y \(3m\) de acuerdo con la propiedad conmutativa
+                </button>
+            </transition>            
+
+            <div class="ecuacion" v-show="stepEjemplo2>=3">
+                \({ {m \cdot 2} \over 3}-m \cdot 3 = 39 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=3" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=4">
+                    Cambiar la expresion \( {m \cdot 2} \over 3 \) de acuerdo con la propiedad asociativa.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=4">
+                \({ m \cdot {2 \over 3}}-m \cdot 3 = 39 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=4" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=5">
+                    Factorizar el factor común m en el miembro de la izquierda.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=5">
+                \({ m ( {2 \over 3}- 3)} = 39 \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=5" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=6">
+                    Escribir una nueva ecuación equivalente aplicando una división entre \({2 \over 3} -3\)
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=6">
+                \({ {m ( {2 \over 3}- 3)} \over  {{2 \over 3}- 3}    } = { 39 \over  {{2 \over 3}- 3} } \)
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=6" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=7">
+                    Cancelar operaciones opuestas en el miembro de la izquierda.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=7">
+                \({ m  } = { 39 \over  {{2 \over 3}- 3} } \)
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                stepEjemplo1: 0,
+                stepEjemplo2:0,
+            }
+        }
+    })
+</script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    button {
+        padding: 10px;
+    }
+
+    .ejemplo {
+        padding: 20px 20px;
+        border: 2px solid cadetblue;
+        border-radius: 10px;
+        margin: 20px 0px;
+    }
+
+    .botonEjemplo {
+        display: block;
+        margin: 10px 0px;
+    }
+
+    .ecuacion {
+        margin: 10px 0px;
+    }
+    .observacion{
+        margin: 10px 0px;
+        font-style: italic;
+    }
+</style>

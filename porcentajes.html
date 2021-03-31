@@ -17,37 +17,43 @@
 
         <p>Para hablar de una parte de un número suele ser útil imaginar
             que se separa en 100 trozos. Cada trozo es llamado un <span class="resaltadoHorizontal"
-                style="background-color: cadetblue;">por ciento</span>. Se representa cada <span class="resaltadoHorizontal"
-                style="background-color: cadetblue;">por ciento</span> con el símbolo <span class="resaltadoHorizontal"
-                style="background-color: cadetblue;">%</span>.
+                style="background-color: cadetblue;">por ciento</span>. Se representa cada <span
+                class="resaltadoHorizontal" style="background-color: cadetblue;">por ciento</span> con el símbolo <span
+                class="resaltadoHorizontal" style="background-color: cadetblue;">%</span>.
         </p>
 
         <p>En el siguiente ejemplo puedes seleccionar un número y verlo separado en 100 por ciento.
         </p>
-        <input type="range" min="5" max="300" step="5" value="30" id="selectorNumero1" v-model="numero1">
-        <p>{{numero1}}</p>
-        <div id="contenedorNumero1">
-            <div id="numero1" class="numeroEnBolitas" ref="numero1" :style="[configGridNumero1, estiloNumero1]">
-                <div :key="numero" v-for="numero in parseInt(numero1)" class="bolita">
-                    <div class="etiquetaBolita">
-                        {{numero}}
+            <input type="range" min="5" max="300" step="5" value="30" id="selectorNumero1" v-model="numero1">
+            <p>{{numero1}}</p>
+            <div id="contenedorNumero1">
+                <div id="numero1" class="numeroEnBolitas" ref="numero1" :style="[configGridNumero1, estiloNumero1]">
+                    <div :key="numero" v-for="numero in parseInt(numero1)" class="bolita">
+                        <div class="etiquetaBolita">
+                            {{numero}}
+                        </div>
                     </div>
+                </div>
+
+                <div v-show="mostrandoPorcentajesNumero1" class="overlayPorcentajes" id="overlayPorcentajesNumero1"
+                    :style="[configGridPorcentajesNumero1, estiloNumero1]">
+                    <div class="porciento" v-for="numero in parseInt(porcientosSeleccionadosNumero1)"
+                        :key="'porcentaje'+numero"></div>
+                    <div class="porcientoNoUsado" v-for="numero in (100-parseInt(porcientosSeleccionadosNumero1))"
+                        :key="'porcentajeNoUsado'+numero"></div>
                 </div>
             </div>
 
-            <div v-show="mostrandoPorcentajesNumero1" class="overlayPorcentajes" id="overlayPorcentajesNumero1" :style="[configGridPorcentajesNumero1, estiloNumero1]">
-                <div class="porciento" v-for="numero in parseInt(porcientosSeleccionadosNumero1)" :key="'porcentaje'+numero"></div>
-            </div>
-        </div>
+            <p v-show="mostrandoPorcentajesNumero1">Estás viendo {{porcientosSeleccionadosNumero1}} <span
+                    class="resaltadoHorizontal" style="background-color: cadetblue;">%</span>
+                de {{numero1}}
+            </p>
 
-        <p v-show="mostrandoPorcentajesNumero1">Estás viendo {{porcientosSeleccionadosNumero1}} <span class="resaltadoHorizontal" style="background-color: cadetblue;">%</span> 
-        de {{numero1}}
-        </p>
-
-        <input v-show="mostrandoPorcentajesNumero1" type="range" min="1" max="100" value="100" v-model="porcientosSeleccionadosNumero1">
-        <br>
-        <button id="bRomperNumero1" v-show="!mostrandoPorcentajesNumero1" v-on:click="mostrarPorcentajesNumero1()">¡Imaginar 100 porciones de este
-            número!</button>
+            <input v-show="mostrandoPorcentajesNumero1" type="range" min="1" max="100" value="100"
+                v-model="porcientosSeleccionadosNumero1">
+            <br>
+            <button id="bRomperNumero1" v-show="!mostrandoPorcentajesNumero1"
+                v-on:click="mostrarPorcentajesNumero1()">¡Imaginar que este número se divide en 100 porciones!</button>
     </div>
 </body>
 
@@ -59,9 +65,9 @@
         data() {
             return {
                 anchoBolitaNumero1: 20,
-                numero1: 25,
+                numero1: 85,
                 mostrandoPorcentajesNumero1: false,
-                porcientosSeleccionadosNumero1:100,
+                porcientosSeleccionadosNumero1: 1,
             }
         },
         computed: {
@@ -98,17 +104,17 @@
                 return {
                     gridTemplateColumns: "repeat(" + porcentajesFila + ", " + anchoPorcentajes + "px)",
                 }
-            },            
+            },
         },
         methods: {
             mostrarPorcentajesNumero1() {
                 this.mostrandoPorcentajesNumero1 = true;
             }
         },
-        watch:{
-            numero1(){
-                this.mostrandoPorcentajesNumero1=false;
-                this.porcientosSeleccionadosNumero1=100;
+        watch: {
+            numero1() {
+                this.mostrandoPorcentajesNumero1 = false;
+                this.porcientosSeleccionadosNumero1 = 1;
             }
         }
     })
@@ -117,6 +123,10 @@
 <style>
     body {
         padding: 2% 5%;
+    }
+
+    button {
+        padding: 10px;
     }
 
     .bolita {
@@ -129,20 +139,21 @@
         position: relative;
     }
 
-    .bolita:hover{
+    .bolita:hover {
         z-index: 10;
         background-color: rgb(153, 77, 22);
     }
 
-    .bolita>.etiquetaBolita{
+    .bolita>.etiquetaBolita {
         display: none;
 
     }
-    .bolita:hover>.etiquetaBolita{
+
+    .bolita:hover>.etiquetaBolita {
         display: block;
     }
 
-    .etiquetaBolita{
+    .etiquetaBolita {
         position: absolute;
         top: 101%;
         left: 50%;
@@ -150,7 +161,7 @@
         border-radius: 10px;
         padding: 10px 20px;
         background-color: rgb(226, 161, 114);
-        border:1px solid rgb(90, 43, 9);
+        border: 1px solid rgb(90, 43, 9);
     }
 
     .numeroEnBolitas {
@@ -165,17 +176,28 @@
     .porciento {
         height: 20px;
         border: 1px solid rgb(4, 43, 44);
-        background-color: rgba(95, 158, 160, 0.377);
+        background-color: rgba(95, 158, 160, 0.055);
         box-sizing: border-box;
         opacity: 0.8;
     }
-    #contenedorNumero1{
-        position: relative;
+
+    .porcientoNoUsado {
+        height: 20px;
+        border: 1px solid rgb(4, 43, 44);
+        background-color: rgba(95, 158, 160, 0.822);
+        box-sizing: border-box;
+        opacity: 0.8;
     }
-    #overlayPorcentajesNumero1{
+
+    #contenedorNumero1 {
+        position: relative;
+        min-width: 400px;
+    }
+
+    #overlayPorcentajesNumero1 {
         position: absolute;
         top: 2px;
-        left:2px;
+        left: 2px;
         pointer-events: none;
     }
 </style>

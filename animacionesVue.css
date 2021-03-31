@@ -53,11 +53,21 @@
 .caer-enter {
     transform: translateY(-80%);
 }
-
 .caer-enter-active {
     transition: all 1s;
 }
 .caer-enter-to{
+    transform: translateY(0%);
+}
+
+
+.subir-enter {
+    transform: translateY(50px);
+}
+.subir-enter-active {
+    transition: all 1.2s;
+}
+.subir-enter-to{
     transform: translateY(0%);
 }
 
@@ -115,5 +125,34 @@
     transition: all 1s;
     transition-timing-function: linear;
     pointer-events: none;
+}
 
+.togglePorArriba-enter, .togglePorArriba-leave-to{
+    transform: translateY(40%);
+    opacity: 0;
+}
+.togglePorArriba-enter-active, .togglePorArriba-leave-active{
+    transition: all 1s;
+    transition-timing-function: linear;
+    pointer-events: none;
+}
+
+.popIn-enter{
+    transform: scale(0.5);
+}
+.popIn-enter-active{
+    transition: all 0.2s;
+}
+.popIn-enter-to{
+    transform: scale(1.2);
+}
+
+.crecerHorizontal-enter{
+    transform: scale(0.1, 1);
+}
+.crecerHorizontal-enter-active{
+    transition: all 0.4s;
+}
+.crecerHorizontal-enter-to{
+    transform: scale(1, 1);
 }
