@@ -12,9 +12,21 @@
     <center>
         <h1>El juego de restar</h1>
 
-        <iframe src="https://scratch.mit.edu/projects/492576903/embed" allowtransparency="true" width="485" height="402"
+        <iframe src="https://scratch.mit.edu/projects/492576903/embed" allowtransparency="true" id="iframeJuego"
             frameborder="0" scrolling="no" allowfullscreen>Cargando...</iframe>
     </center>
 </body>
 
 </html>
+
+<style>
+     #iframeJuego{
+        width: min(800px, 90vw);
+        height: min(800px, 90vw);
+        background-image: url('loading.gif');
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin: 10px auto;
+        display: block;
+    }
+</style>
