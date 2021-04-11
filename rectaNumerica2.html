@@ -20,10 +20,17 @@
 <body>
     <div id="doc">
         <p>
-            La recta numérica es infinitamente larga. Así que se puede recorrer indefinidamente hacia la derecha... Y hacia la izquierda.
+            La recta numérica es infinitamente larga. Así que se puede recorrer indefinidamente hacia la derecha... Y
+            hacia la izquierda.
         </p>
-    
-        <p>En el siguiente cuadro se explora la recta numérica hacia la izquierda del orígen.
+
+        <p>
+            La dirección natural para contar números es hacia la derecha del órigen. La izquierda es el otro lado. 
+            Se usará el símbolo menos <span class="resaltadoHorizontal" style="background-color: cadetblue;">-</span> para señalar que un número está 
+            hacia <span class="resaltadoHorizontal" style="background-color: cadetblue;">el otro lado</span>
+        </p>
+
+        <p>En el siguiente cuadro se explora la recta numérica hacia el otro lado del orígen.
         </p>
 
         <div id="explicacionAnimada" class="recuadro">
@@ -35,19 +42,26 @@
                 <transition name="crecerHorizontal">
                     <div id="rectaNumerica" v-show="stepExplicacionAnimada>=1"></div>
                 </transition>
-                <div id="contenedorBolitas" :style="[posicionNumeros, anchoNumeros]" v-show="stepExplicacionAnimada>=3">
-                    <transition-group name="popIn" tag="div" style="display: flex;">
-                        <div class="bolitaNumero" :key="numero" :class="{fondoActivo:numeroActivo==(numero-1)}"
+                <div id="contenedorBolitas" :style="[anchoNumeros]" v-show="stepExplicacionAnimada>=3">
+                    <transition-group name="popIn" tag="div" style="display: flex; flex-direction: row-reverse;">
+                        <div class="bolitaNumero" :key="numero" :class="{fondoActivo:numeroActivo==(numero-1), fondoOrigen:numero-1==0}"
                             v-for="numero of (numeroActivo+1)">
                             <div class="nombreNumero" :class="{fondoActivo:numeroActivo==(numero-1)}">
-                                {{numero-1}}
+                                {{numero-1>0?'-':null}}{{numero-1}}
                             </div>
                         </div>
-                        </transition>
+                    </transition-group>
+                    <div class="bolitaNumero" :key="numero" v-for="numero of 50">
+                        <div class="nombreNumero">
+                            {{numero}}
+                        </div>
+                    </div>
                 </div>
+                
 
-                <div id="contenedorSegmentos" :style="[posicionSegmentos, anchoNumeros]">
-                    <transition-group name="crecerHorizontal" tag="div" style="display: flex;">
+                <div id="contenedorSegmentos" :style="[anchoNumeros]">
+                    <transition-group name="crecerHorizontal" tag="div"
+                        style="display: flex; flex-direction: row-reverse;">
                         <div class="segmentoUnidad" :key="numero" v-for="numero of numeroActivo">
                         </div>
                     </transition-group>
@@ -63,35 +77,39 @@
 
             <transition name="caer" v-on:after-enter="stepExplicacionAnimada=2">
                 <div class="comentario" v-show="stepExplicacionAnimada==1 || stepExplicacionAnimada==2">
-                    Estamos viendo la recta numérica. Los números son puntos de esta linea.
+                    Esta es la recta numérica.
                 </div>
             </transition>
 
             <button class="botonExplicacionAnimada" v-on:click="stepExplicacionAnimada=3"
-                v-show="stepExplicacionAnimada==2">¡Imaginar el primer número!</button>
+                v-show="stepExplicacionAnimada==2">¡Imaginar los números naturales!</button>
 
             <transition name="caer" v-on:after-enter="stepExplicacionAnimada=4">
-                <div class="comentario" v-show="stepExplicacionAnimada==3 || stepExplicacionAnimada==4">El primer número
-                    imaginado es el punto del número cero.
-                    Se le suele llamar <span style="font-weight: bold;">el orígen</span>.</div>
+                <div class="comentario" v-show="stepExplicacionAnimada==3 || stepExplicacionAnimada==4">
+                    Este es el punto del número cero
+                    (<span style="font-weight: bold;">el orígen</span>) y los puntos correspondientes a los números naturales.
+                </div>
+                    
             </transition>
 
             <button v-on:click="stepExplicacionAnimada=5" v-show="stepExplicacionAnimada==4"
-                class="botonExplicacionAnimada">¿Y dónde imaginamos los demás números?</button>
+                class="botonExplicacionAnimada">¡Usemos la unidad para contar hacia el otro lado!</button>
 
             <transition name="caer" v-on:after-enter="stepExplicacionAnimada=6">
                 <div class="comentario"
                     v-show="(stepExplicacionAnimada==5 || stepExplicacionAnimada==6) && numeroActivo==0">
-                    Para imaginar los demás números se usará este segmento de recta imaginario. Representa una unidad y
-                    sirve para contar.
+                    Se usará la unidad para contar hacia el otro lado del orígen.
                 </div>
             </transition>
 
             <button class="botonExplicacionAnimada" v-show="stepExplicacionAnimada>=6"
-                v-on:click="numeroActivo++">{{numeroActivo>0?'¡Seguir contando':'¡Empezar a contar!'}}</button>
+                v-on:click="numeroActivo++">{{numeroActivo>0?'¡Seguir contando':'¡Empezar a contar hacia el otro lado!'}}</button>
             <transition name="caer">
-                <div class="comentario" v-show="numeroActivo>0" :key="numeroActivo">A {{numeroActivo}}
-                    unidad{{numeroActivo>1?'es':null}} de distancia desde el 0 está el número {{numeroActivo}}.</div>
+                <div class="comentario" v-show="numeroActivo>0" :key="numeroActivo">
+                    Este número está a {{numeroActivo}} unidad{{numeroActivo>1?'es':null}} de distancia del cero
+                    hacia el otro lado. Es un <span class="resaltadoHorizontal"
+                        style="background-color: rgb(230, 72, 72);">-{{numeroActivo}}</span>
+                </div>
             </transition>
 
 
@@ -159,7 +177,7 @@
     }
 
     #contenedorRectaNumerica {
-        
+
         overflow: hidden;
         height: 140px;
         width: 100%;
@@ -174,12 +192,12 @@
         top: 52px;
     }
 
-    .comentario{
+    .comentario {
         padding: 15px;
         font-size: 16px;
         border-radius: 10px;
         background-color: rgba(95, 158, 160, 0.767);
-        border:1px solid black;
+        border: 1px solid black;
         margin: 5px 20px;
     }
 
@@ -194,7 +212,9 @@
         transition: left 0.3s;
         position: absolute;
         top: 50px;
+        min-width: 100%;
     }
+
 
     .bolitaNumero {
         width: 10px;
@@ -203,6 +223,7 @@
         background-color: gray;
         position: relative;
         margin: 0px 10px;
+        min-width: 10px;
     }
 
     .nombreNumero {
@@ -219,10 +240,10 @@
         position: absolute;
         transition: left 0.3s;
         top: 53px;
-
+        left: 15px;
     }
 
-    #unidadReferencia{
+    #unidadReferencia {
         position: relative;
         top: 110px;
     }
@@ -242,7 +263,7 @@
         margin: 0px auto;
     }
 
-    #nombreUnidad{
+    #nombreUnidad {
         position: absolute;
         top: 120%;
         left: 50%;
@@ -258,5 +279,9 @@
     .deshabilitado {
         pointer-events: none;
         opacity: 0.6;
+    }
+
+    .fondoOrigen{
+        background-color: purple;
     }
 </style>
