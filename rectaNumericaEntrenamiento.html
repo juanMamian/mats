@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamiento de recta numérica</title>
+</head>
+
+<body>
+    <div id="doc">
+        <div class="cuadroEntrenamiento">
+            <center>
+                <button>¡Generar un número al azar!</button>
+            </center>
+
+            <center>
+                <div id="numero">
+                    {{numero}}
+                </div>
+            </center>
+
+            <p>¡Encuéntralo en la recta numérica!</p>
+
+            <div tabindex="0" ref="contenedorRectaNumerica" id="contenedorRectaNumerica"
+                v-on:mouseenter="hoveringRecta=true" v-on:mouseleave="hoveringRecta=false">
+                <div id="rectaNumerica"></div>
+                <div id="contenedorBolitas">
+                    <div class="bolitaNumero" :key="numero" v-for="numero of 200"
+                        v-on:click="numeroBase=(parseInt(numero)+numeroVisibleInicial); reloadExpresion(); cantidadMultiplicado=0"
+                        :class="{numeroBase:numeroBase==(parseInt(numero)+numeroVisibleInicial), bolitaOrigen: (numero+numeroVisibleInicial)==0, bolitaResultado:resultado==(numero+numeroVisibleInicial)}"
+                        :style="{left:  40*(parseInt(numero)+numeroVisibleInicial+parseInt(panRectaNumerica))+'px'}">
+                        <div class="nombreNumero">
+                            {{numero+numeroVisibleInicial}}
+                        </div>
+                    </div>
+                </div>
+                <transition name="subirDeRecta">
+                    <div id="contenedorSegmentosBase" class="contenedorSegmentos" :key="'segmentos'+numeroBase"
+                        :style="[posicionSegmentosBase]">
+                        <transition-group name="crecerHorizontal" tag="div" style="display: flex;">
+                            <div class="segmentoUnidad" :key="numero" v-for="numero of Math.abs(parseInt(numeroBase))">
+                            </div>
+                        </transition-group>
+                    </div>
+                </transition>
+
+                <transition-group name="caerPropio" tag="div"
+                    style="display: flex; position: absolute; top: 53px;"
+                    :style="[posicionSegmentosResultado, {flexDirection:multiplicarPorNegativo?'row-reverse': 'row'}]"
+                    v-show="cantidadMultiplicado>0">
+                    <div class="contenedorSegmentosMultiplicados contenedorSegmentos"
+                        v-for="vez of cantidadMultiplicado" :key="vez" style="display: flex;">
+                        <div class="segmentoUnidad" :key="numero" v-for="numero of Math.abs(parseInt(numeroBase))">
+                        </div>
+                    </div>
+                </transition-group>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                numeroGenerado: false,
+                numero: null,
+                hoveringRecta:false,
+                numeroVisibleInicial:false,
+                
+            }
+        }
+    })
+</script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    #cuadroEntrenamiento {
+        border: 2px solid cadetblue;
+        border-radius: 15px;
+        padding: 15px;
+
+    }
+
+    button {
+        padding: 10px;
+    }
+</style>

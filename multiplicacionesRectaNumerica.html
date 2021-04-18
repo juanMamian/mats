@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplicaciones en la recta numérica</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="animacionesVue.css">
+    <link rel="stylesheet" href="numerosColores.css">
+    <link rel="stylesheet" href="figuras.css">
+</head>
+
+<body>
+    <div id="doc">
+        <p>
+            Multiplicación significa repetición. En la recta numérica las multiplicaciones
+            se imaginan como repeticiones de las unidades que señalan la distancia desde
+            el orígen hasta un número.
+        </p>
+
+        <p>
+            En el siguiente cuadro puedes seleccionar un número y multiplicarlo.
+        </p>
+
+        <div id="cuadroEjemplo">
+            <div tabindex="0" ref="contenedorRectaNumerica" id="contenedorRectaNumerica"
+                v-on:mouseenter="hoveringRecta=true" v-on:mouseleave="hoveringRecta=false">
+                <div id="rectaNumerica"></div>
+                <div id="contenedorBolitas">
+                    <div class="bolitaNumero" :key="numero" v-for="numero of 200"
+                        v-on:click="numeroBase=(parseInt(numero)+numeroVisibleInicial); reloadExpresion(); cantidadMultiplicado=0"
+                        :class="{numeroBase:numeroBase==(parseInt(numero)+numeroVisibleInicial), bolitaOrigen: (numero+numeroVisibleInicial)==0, bolitaResultado:resultado==(numero+numeroVisibleInicial)}"
+                        :style="{left:  40*(parseInt(numero)+numeroVisibleInicial+parseInt(panRectaNumerica))+'px'}">
+                        <div class="nombreNumero">
+                            {{numero+numeroVisibleInicial}}
+                        </div>
+                    </div>
+                </div>
+                <transition name="subirDeRecta">
+                    <div id="contenedorSegmentosBase" class="contenedorSegmentos" :key="'segmentos'+numeroBase"
+                        :style="[posicionSegmentosBase]">
+                        <transition-group name="crecerHorizontal" tag="div" style="display: flex;">
+                            <div class="segmentoUnidad" :key="numero" v-for="numero of Math.abs(parseInt(numeroBase))">
+                            </div>
+                        </transition-group>
+                    </div>
+                </transition>
+
+                <transition-group name="caerPropio" tag="div"
+                    style="display: flex; position: absolute; top: 53px;"
+                    :style="[posicionSegmentosResultado, {flexDirection:multiplicarPorNegativo?'row-reverse': 'row'}]"
+                    v-show="cantidadMultiplicado>0">
+                    <div class="contenedorSegmentosMultiplicados contenedorSegmentos"
+                        v-for="vez of cantidadMultiplicado" :key="vez" style="display: flex;">
+                        <div class="segmentoUnidad" :key="numero" v-for="numero of Math.abs(parseInt(numeroBase))">
+                        </div>
+                    </div>
+                </transition-group>
+            </div>
+
+            <button v-on:click="multiplicar">¡Multiplicar!</button>
+            <button v-on:click="multiplicarConNegativo">¡Multiplicar hacia el otro
+                lado!</button>
+
+            <div id="expresion" :key="versionExpresion">
+                {{expresion}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                numeroBase: 4,
+                numeroVisibleInicial: -100,
+                panRectaNumerica: 5,
+
+                versionExpresion: 0,
+                hoveringRecta: false,
+
+                cantidadMultiplicado: 0,
+                multiplicarPorNegativo: false,
+            }
+        },
+        computed: {
+            posicionSegmentosBase() {
+                if (this.numeroBase > 0) {
+                    return {
+                        left: 5 + 40 * (this.panRectaNumerica) + 'px'
+                    }
+                }
+                else {
+                    return {
+                        left: (5 + 40 * (this.panRectaNumerica)) - (40 * Math.abs(this.numeroBase)) + 'px'
+                    }
+                }
+            },
+            posicionSegmentosResultado() {
+                if (this.resultado > 0) {
+                    return {
+                        left: 5 + 40 * (this.panRectaNumerica) + 'px'
+                    }
+                }
+                else if (this.resultado < 0) {
+                    return {
+                        left: (5 + 40 * (this.panRectaNumerica)) - (40 * Math.abs(this.resultado)) + 'px'
+                    }
+                }
+            },
+            resultado() {
+                var numMultiplicado = this.cantidadMultiplicado;
+                if (this.multiplicarPorNegativo) {
+                    numMultiplicado = -1 * this.cantidadMultiplicado;
+                }
+                return this.numeroBase * numMultiplicado;
+            },
+            expresion() {
+                if (this.cantidadMultiplicado == 0) {
+                    return this.numeroBase;
+                }
+                var multiplicacion = " \\times " + this.cantidadMultiplicado;
+                if (this.multiplicarPorNegativo) {
+                    multiplicacion = " \\times -" + this.cantidadMultiplicado;
+                }
+
+                var expresion = this.numeroBase + multiplicacion;
+
+                expresion = expresion + "=" + this.resultado;
+
+                return "\\( " + expresion + "\\)";
+            },
+        },
+        methods: {
+            reloadExpresion() {
+                this.versionExpresion++;
+                this.$nextTick(() => {
+                    MathJax.typeset();
+                })
+            },
+            focusRecta() {
+                console.log(`Focusing recta`);
+                this.$refs.contenedorRectaNumerica.focus();
+            },
+            scrollingPage(e) {
+
+                if (this.hoveringRecta) {
+
+                    this.panRectaNumerica = this.panRectaNumerica - parseInt(e.deltaY);
+                }
+            },
+            multiplicar() {
+                // if (this.multiplicarPorNegativo) {
+                //     this.cantidadMultiplicado = 0;
+                //     this.multiplicarPorNegativo = false;
+                //     this.$nextTick(() => {
+                //         this.cantidadMultiplicado++;
+                //     });
+                // }
+                if(this.multiplicarPorNegativo){
+                    this.cantidadMultiplicado=0;
+                    this.multiplicarPorNegativo=false;
+                }
+                this.$nextTick(()=>{
+
+                        this.cantidadMultiplicado++;
+                });
+            },
+            multiplicarConNegativo() {
+                if (!this.multiplicarPorNegativo) {
+                    this.cantidadMultiplicado = 0;
+                    this.multiplicarPorNegativo = true;
+                }
+                this.$nextTick(() => {
+
+                    this.cantidadMultiplicado++;
+                });
+            },
+        },
+        watch: {
+            hoveringRecta(nuevo, viejo) {
+                if (nuevo) {
+                    var scrollPosition = {
+                        x: self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                        y: self.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                    };
+                    this.scrollPosition = scrollPosition;
+                    document.querySelector("html").style.overflow = "hidden";
+                }
+                else {
+                    document.querySelector("html").style.overflow = "scroll";
+                }
+            },
+            panRectaNumerica(nuevo) {
+                if (-nuevo - this.numeroVisibleInicial < 10) {
+                    this.numeroVisibleInicial = this.numeroVisibleInicial - 100;
+                }
+
+                if (((this.numeroVisibleInicial + 200) + nuevo) < 50) {
+                    this.numeroVisibleInicial = this.numeroVisibleInicial + 100
+                }
+            },
+            expresion() {
+                this.reloadExpresion();
+            }
+        },
+        mounted() {
+            document.addEventListener('wheel', this.scrollingPage);
+        }
+    })
+</script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    #cuadroEjemplo {
+        position: relative;
+        width: 90%;
+        border: 2px solid cadetblue;
+        border-radius: 15px;
+        padding: 10px;
+        padding-bottom: 40px;
+    }
+
+    #contenedorRectaNumerica {
+
+        overflow: hidden;
+        height: 100px;
+        width: 100%;
+        position: relative;
+    }
+
+    #rectaNumerica {
+        width: 100%;
+        height: 5px;
+        background-color: gray;
+        position: absolute;
+        top: 52px;
+    }
+
+    #contenedorBolitas {
+        display: flex;
+        position: relative;
+        transition: left 0.3s;
+        position: absolute;
+        top: 50px;
+    }
+
+    .bolitaNumero {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: gray;
+        position: absolute;
+        cursor: pointer;
+        transition: left 0.3s;
+    }
+
+    .bolitaOrigen {
+        background-color: purple;
+    }
+
+    .nombreNumero {
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        transform: translate(-50%, -120%);
+        border-radius: 50%;
+        padding: 5px;
+        font-size: 13px;
+    }
+
+    .numeroBase {
+        background-color: red;
+    }
+
+    .segmentoUnidad {
+        width: 39px;
+        height: 3px;
+        background-color: rgb(208, 192, 62);
+        margin-left: 1px;
+        border-radius: 2px;
+        pointer-events: none;
+    }
+
+    .contenedorSegmentos {
+        display: flex;
+        position: absolute;
+        top: 53px;
+    }
+
+    #contenedorSegmentosBase {
+        top: 12px;
+        transition: left 0.3s;
+    }
+
+    .contenedorSegmentosMultiplicados {
+        top: 0px;
+        position: relative;
+    }
+
+    .bolitaResultado {
+        background-color: rgb(19, 54, 5);
+    }
+
+    #expresion {
+        text-align: center;
+        max-width: 200px;
+        padding: 10px 20px;
+        border: 2px solid cadetblue;
+        border-radius: 15px;
+        margin: 0px auto;
+    }
+
+
+    .subirDeRecta-enter {
+        transform: translateY(41px);
+    }
+
+    .subirDeRecta-enter-active {
+        transition: all 1.2s;
+    }
+
+    .subirDeRecta-enter-to {
+        transform: translateY(0%);
+    }
+
+
+    .caerPropio-enter {
+        transform: translateY(-41px);
+        transition: left 1s;
+    }
+
+    .caerPropio-enter-active {
+        transition: top 1s;
+    }
+
+    .caerPropio-enter-to {
+        transform: translateY(0%);
+        transition: left 1s;
+
+    }
+</style>

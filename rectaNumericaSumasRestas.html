@@ -101,8 +101,7 @@
     const doc = new Vue({
         el: "#doc",
         data() {
-            return {
-                numeroActivo: 5,
+            return {                
                 numeroBase: 0,
                 versionExpresion: 0,
                 operacionSeleccionada: null,
@@ -119,12 +118,7 @@
                 }
             }
         },
-        computed: {
-            posicionNumeros() {
-                return {
-                    left: Math.min(0, 200 - (this.numeroActivo * 30)) + "px"
-                }
-            },
+        computed: {            
             posicionSegmentosSuma() {
                 return {
                     left: '10px'
