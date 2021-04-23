@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="numerosColores.css">
     <link rel="stylesheet" href="figuras.css">
 
-    <title>Entrenamiento de recta numérica</title>
+    <title>Entrenamiento de sumas y restas en la recta numérica</title>
 </head>
 
 <body>
@@ -24,9 +24,9 @@
 
             <center>
                 <transition name="popIn">
-                    <div id="numero" :key="'num'+numeroGenerado" v-show="numeroGenerado!=null">
+                    <div id="numero" :key="'expresion'+versionExpresion" v-show="numeroGenerado!=null">
                         <span>
-                            {{numeroGenerado}}
+                            {{expresionGenerada}}
                         </span>
                     </div>
                 </transition>
@@ -34,10 +34,10 @@
 
             <div class="instruccion" style="text-align: center;" v-show="esperandoRespuesta">
                 <img src="bandera.png" alt="Bandera" class="imgBandera">
-                ¡Encuéntralo en la recta numérica!
+                ¡Encuéntra el resultado en la recta numérica!
             </div>
 
-            <div ref="contenedorRectaNumerica" id="contenedorRectaNumerica" v-show="numeroGenerado!=null">
+            <div ref="contenedorRectaNumerica" id="contenedorRectaNumerica" v-show="numeroGenerado != null">
                 <img class="pannerRecta" src="flecha.png" style="left: 0px; transform: rotate(180deg);"
                     @click="panRectaNumerica+=2">
                 <img class="pannerRecta" src="flecha.png" style="right: 0px;" @click.stop="panRectaNumerica-=2">
@@ -48,7 +48,7 @@
                         :class="{bolitaOrigen: (numero+numeroVisibleInicial)==0, bolitaRespuesta:respuesta==numeroGenerado && numeroGenerado==numero+numeroVisibleInicial, bolitaErrada:respuesta!=numeroGenerado && respuesta==numero+numeroVisibleInicial}"
                         @click="marcarRespuesta(numero+numeroVisibleInicial)"
                         :style="{left:  40*(parseInt(numero)+numeroVisibleInicial+panRectaNumerica)+'px'}">
-                        <div class="nombreNumero" v-show="(numero+numeroVisibleInicial)==0 || ((numero+numeroVisibleInicial)==numeroGenerado && respuesta==numeroGenerado)">
+                        <div class="nombreNumero">
                             {{numero+numeroVisibleInicial}}
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                 </div>
             </transition>
             <center>
-                <button @click="generarNumero" v-show="!numeroGenerado || respuesta==numeroGenerado">{{numeroGenerado?'¡Generar otro!':'¡Generar un número!'}}</button>
+                <button @click="generarNumero" v-show="!numeroGenerado || respuesta==numeroGenerado">{{numeroGenerado!=null?'¡Generar otra!':'¡Generar una suma o resta!'}}</button>
             </center>
         </div>
     </div>
@@ -77,20 +77,28 @@
             return {
                 esperandoRespuesta: false,
                 numeroGenerado: null,
+                expresionGenerada:null,
                 numeroVisibleInicial: -100,
                 panRectaNumerica: 5,
                 respuesta: null,
                 
                 generarNegativo:false,
+                versionExpresion:0,
             }
         },
         methods: {
             generarNumero() {
-                this.numeroGenerado = parseInt(Math.random() * 20);
-                this.generarNegativo=!this.generarNegativo;
-                if(this.generarNegativo){
-                    this.numeroGenerado=-this.numeroGenerado;
-                }
+                var num1=parseInt(Math.random()*20)-10;
+                var num2=parseInt(Math.random()*10);
+                var operacion=Math.random()<0.5?" - ": " + ";
+
+                this.expresionGenerada="\\( "+num1 + operacion + num2 + "\\)";
+                this.versionExpresion++;
+                this.$nextTick(()=>{
+                    MathJax.typeset();
+                })
+                this.numeroGenerado = operacion==" - "? num1-num2:num1+num2;              
+               
                 this.esperandoRespuesta = true;
                 this.respuesta=null;
             },
@@ -107,7 +115,7 @@
                 if(val==this.numeroGenerado){
                     this.esperandoRespuesta=false;
                 }
-            }
+            },           
         }
     })
 </script>
@@ -119,11 +127,11 @@
 
     #numero {
         margin: 30px auto;
-        font-size: 24px;
+        font-size: 20px;
         padding: 15px;
-        border-radius: 50%;
+        border-radius: 20px;
         background-color: rgb(40, 148, 40);
-        width: 50px;
+        width: 350px;
         height: 50px;
         position: relative;
     }

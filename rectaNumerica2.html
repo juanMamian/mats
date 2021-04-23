@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="numerosColores.css">
     <link rel="stylesheet" href="figuras.css">
 
-    <title>Dirección contraria de la recta numérica</title>
+    <title>Recta numérica</title>
 </head>
 
 <body>
@@ -25,16 +25,18 @@
         </p>
 
         <p>
-            La dirección natural para contar números es hacia la derecha del órigen. La izquierda es el otro lado. 
-            Se usará el símbolo menos <span class="resaltadoHorizontal" style="background-color: cadetblue;">-</span> para señalar que un número está 
+            La dirección natural para contar números es hacia la derecha del órigen. La izquierda es el otro lado. Se
+            usará el símbolo menos <span class="resaltadoHorizontal" style="background-color: cadetblue;">-</span> para
+            señalar que un número está
             hacia <span class="resaltadoHorizontal" style="background-color: cadetblue;">el otro lado</span>
         </p>
 
-        <p>En el siguiente cuadro se explora la recta numérica hacia el otro lado del orígen.
+        <p>
+            En el siguiente cuadro se explora la recta numérica hacia el otro lado del orígen.
         </p>
-
         <div id="explicacionAnimada" class="recuadro">
-            <button class="botonExplicacionAnimada" v-on:click="stepExplicacionAnimada=0; numeroActivo=0"
+            <button class="botonExplicacionAnimada"
+                v-on:click="stepExplicacionAnimada=0; numeroActivo=0; panRectaNumerica=0;"
                 v-show="stepExplicacionAnimada>0">Reiniciar</button>
             <button class="botonExplicacionAnimada" v-on:click="stepExplicacionAnimada=1"
                 v-show="stepExplicacionAnimada==0">Iniciar</button>
@@ -42,29 +44,24 @@
                 <transition name="crecerHorizontal">
                     <div id="rectaNumerica" v-show="stepExplicacionAnimada>=1"></div>
                 </transition>
-                <div id="contenedorBolitas" :style="[anchoNumeros]" v-show="stepExplicacionAnimada>=3">
-                    <transition-group name="popIn" tag="div" style="display: flex; flex-direction: row-reverse;">
-                        <div class="bolitaNumero" :key="numero" :class="{fondoActivo:numeroActivo==(numero-1), fondoOrigen:numero-1==0}"
-                            v-for="numero of (numeroActivo+1)">
-                            <div class="nombreNumero" :class="{fondoActivo:numeroActivo==(numero-1)}">
-                                {{numero-1>0?'-':null}}{{numero-1}}
+                <div id="contenedorBolitas">
+                    <transition-group name="popIn" tag="div" style="display: flex;">
+                        <div class="bolitaNumero" :key="numero"
+                            :class="{fondoActivo:numeroActivo==(40-numero), bolitaOrigen:(40-numero)==0}"
+                            :style="{left:  (40*(parseInt(41-numero) + panRectaNumerica))+'px', flexDirection:'row-reverse'}"
+                            v-for="numero of (40 + Math.abs(numeroActivo))" v-show="stepExplicacionAnimada>=3">
+                            <div class="nombreNumero" :class="{fondoActivo:numeroActivo==(40-numero)}">
+                                {{40-numero}}
                             </div>
                         </div>
-                    </transition-group>
-                    <div class="bolitaNumero" :key="numero" v-for="numero of 50">
-                        <div class="nombreNumero">
-                            {{numero}}
+                        </transition>
+                </div>
+
+                <div id="contenedorSegmentos" v-show="numeroActivo!=0" :style="[posicionSegmentos, transicionPanning]">
+                    <div style="display: flex; flex-direction: row-reverse;">
+                        <div class="segmentoUnidad" :key="numero" v-for="numero of Math.abs(parseInt(numeroActivo))">
                         </div>
                     </div>
-                </div>
-                
-
-                <div id="contenedorSegmentos" :style="[anchoNumeros]">
-                    <transition-group name="crecerHorizontal" tag="div"
-                        style="display: flex; flex-direction: row-reverse;">
-                        <div class="segmentoUnidad" :key="numero" v-for="numero of numeroActivo">
-                        </div>
-                    </transition-group>
                 </div>
 
                 <transition name="subir">
@@ -77,43 +74,42 @@
 
             <transition name="caer" v-on:after-enter="stepExplicacionAnimada=2">
                 <div class="comentario" v-show="stepExplicacionAnimada==1 || stepExplicacionAnimada==2">
-                    Esta es la recta numérica.
+                    Aquí está la recta numérica
                 </div>
             </transition>
 
             <button class="botonExplicacionAnimada" v-on:click="stepExplicacionAnimada=3"
-                v-show="stepExplicacionAnimada==2">¡Imaginar los números naturales!</button>
+                v-show="stepExplicacionAnimada==2">¡Imaginar el origen y los números naturales!</button>
 
             <transition name="caer" v-on:after-enter="stepExplicacionAnimada=4">
-                <div class="comentario" v-show="stepExplicacionAnimada==3 || stepExplicacionAnimada==4">
-                    Este es el punto del número cero
-                    (<span style="font-weight: bold;">el orígen</span>) y los puntos correspondientes a los números naturales.
+                <div class="comentario" v-show="stepExplicacionAnimada==3 || stepExplicacionAnimada==4">Estos son los
+                    números naturales, a la derecha del orígen.
                 </div>
-                    
             </transition>
 
-            <button v-on:click="stepExplicacionAnimada=5" v-show="stepExplicacionAnimada==4"
-                class="botonExplicacionAnimada">¡Usemos la unidad para contar hacia el otro lado!</button>
+            <button v-on:click="panHaciaIzquierda(); stepExplicacionAnimada=5" v-show="stepExplicacionAnimada==4"
+                class="botonExplicacionAnimada">¡Exploremos la izquierda del orígen!</button>
 
             <transition name="caer" v-on:after-enter="stepExplicacionAnimada=6">
                 <div class="comentario"
                     v-show="(stepExplicacionAnimada==5 || stepExplicacionAnimada==6) && numeroActivo==0">
-                    Se usará la unidad para contar hacia el otro lado del orígen.
+                    Se usará la unidad para contar hacia la izquierda del orígen.
                 </div>
             </transition>
 
             <button class="botonExplicacionAnimada" v-show="stepExplicacionAnimada>=6"
-                v-on:click="numeroActivo++">{{numeroActivo>0?'¡Seguir contando':'¡Empezar a contar hacia el otro lado!'}}</button>
+                :class="{deshabilitado: panningRecta}" v-on:click="numeroActivo--">
+                {{Math.abs(numeroActivo)>0?'¡Seguir contando':'¡Empezar a contar!'}}</button>
             <transition name="caer">
-                <div class="comentario" v-show="numeroActivo>0" :key="numeroActivo">
-                    Este número está a {{numeroActivo}} unidad{{numeroActivo>1?'es':null}} de distancia del cero
-                    hacia el otro lado. Es un <span class="resaltadoHorizontal"
-                        style="background-color: rgb(230, 72, 72);">-{{numeroActivo}}</span>
-                </div>
+                <div class="comentario" v-show="Math.abs(numeroActivo)>0" :key="numeroActivo">Este número está a {{Math.abs(numeroActivo)}}
+                    unidad{{Math.abs(numeroActivo)>1?'es':null}} de distancia desde el <span class="resaltadoHorizontal" style="background-color: rgb(184, 29, 184);">cero</span> hacia el otro lado. Es el {{numeroActivo}}.</div>
             </transition>
 
+        </div>
 
-
+        <div class="nota">
+            <img src="conclusion.png" alt="Conclusión" class="imgCuadro">
+            Los números a la izquierda del orígen son llamados <span class="resaltadoHorizontal" style="background-color: cadetblue;">Números negativos</span>
         </div>
     </div>
 
@@ -132,6 +128,18 @@
                 numeroActivo: 0,
                 maxNumero: 19,
                 anchoSegmento: 10,
+                panRectaNumerica: 0,
+
+                panningRecta: false,
+            }
+        },
+        methods: {
+            panHaciaIzquierda() {
+                const anchoCuadro = document.getElementById("explicacionAnimada").offsetWidth;
+                const numerosQueCaben = Math.round(anchoCuadro / 40);
+                const pan = Math.round(numerosQueCaben * 0.7);
+                console.log(`Se paneará ${pan}`);
+                this.panRectaNumerica = this.panRectaNumerica + pan;
             }
         },
         computed: {
@@ -150,7 +158,34 @@
             },
             posicionSegmentos() {
                 return {
-                    left: Math.min(15, 215 - (this.numeroActivo * 30)) + "px"
+                    left: 45 + 40 * (this.panRectaNumerica + this.numeroActivo) + 'px'
+                }
+            },
+            transicionPanning() {
+                return {
+                    transition: this.panningRecta ? 'left 1s' : 'left 0s'
+                }
+            }
+        },
+        watch: {
+            numeroActivo() {
+                const anchoCuadro = document.getElementById("explicacionAnimada").offsetWidth;
+                const ventanaPan = Math.round(anchoCuadro * 0.3);
+                const leftSegmentos = parseInt(this.posicionSegmentos.left.substr(0, this.posicionSegmentos.left.length - 2));
+                console.log(`leftSegmentos: ${leftSegmentos}`);
+                if (leftSegmentos < ventanaPan) {
+                    console.log(`Acercándose al borde`);
+                    const dis = this;
+                    this.$nextTick(() => {
+                        this.panningRecta = true;                    
+                        setTimeout(function () {
+                            dis.panningRecta = false;
+                        }, 1100);
+
+                        setTimeout(function () {
+                            dis.panRectaNumerica = dis.panRectaNumerica + 5;
+                        }, 50);
+                    });
                 }
             }
         }
@@ -209,21 +244,24 @@
     #contenedorBolitas {
         display: flex;
         position: relative;
-        transition: left 0.3s;
         position: absolute;
         top: 50px;
-        min-width: 100%;
     }
-
 
     .bolitaNumero {
         width: 10px;
         height: 10px;
         border-radius: 50%;
         background-color: gray;
-        position: relative;
-        margin: 0px 10px;
-        min-width: 10px;
+        position: absolute;
+        transition: left 1s;
+    }
+
+    .bolitaOrigen {
+        background-color: purple;
+        width: 16px;
+        height: 16px;
+        transform: translate(-3px, -3px);
     }
 
     .nombreNumero {
@@ -238,9 +276,7 @@
     #contenedorSegmentos {
         display: flex;
         position: absolute;
-        transition: left 0.3s;
         top: 53px;
-        left: 15px;
     }
 
     #unidadReferencia {
@@ -249,17 +285,18 @@
     }
 
     .segmentoUnidad {
-        width: 29px;
+        width: 39px;
         height: 3px;
-        background-color: rgb(5, 61, 78);
+        background-color: rgb(208, 192, 62);
         margin-left: 1px;
         border-radius: 2px;
     }
 
     #segmentoReferencia {
-        width: 29px;
+        width: 39px;
         height: 4px;
-        background-color: rgb(5, 61, 78);
+        background-color: rgb(208, 192, 62);
+
         margin: 0px auto;
     }
 
@@ -281,7 +318,34 @@
         opacity: 0.6;
     }
 
-    .fondoOrigen{
-        background-color: purple;
+    .nota {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(233, 185, 150);
+        padding: 15px;
+    }
+
+    .imgCuadro {
+        width: 25px;
+
+    }
+
+    .popIn-enter-active {
+        animation: pop-in 0.3s;
+
+    }
+
+    @keyframes pop-in {
+        0% {
+            transform: scale(0);
+        }
+
+        80% {
+            transform: scale(1.3);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
 </style>
