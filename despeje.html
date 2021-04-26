@@ -22,123 +22,53 @@
 
         <p>Como en el siguiente ejemplo:</p>
 
-        <ul>
-            <li>\({r}= {{3 \times 8 + 2} \over 4} \)</li>
-        </ul>
+        
+        <div class="ecuacionEjemplo">\({r}= {{3 \times 8 + 2} \over 4} \)</div>
+       
 
         <p>Esta ecuación afirma que la incógnita \(r\) es igual de grande que
             la expresión numérica que aparece en el miembro de la derecha. Así que al conocer
             el valor de esa expresión numérica, se descubre también el valor de la incógnita.
         </p>
 
-        <p>Frecuentemente, en las ecuaciones la incógnita no está despejada. Como en el siguiente ejemplo.</p>
+        <div class="nota">
+            <img src="bombillo.png" alt="Idea" style="width: 25px;">
+            Frecuentemente se trabaja con ecuaciones donde la incógnita no está despejada. 
+        </div>
+            
+        <p>En la siguiente ecuación la incógnita \(m\) no está despejada.</p>
 
-        <ul>
-            <li v-pre>
-                \( m \times 3 = {7 \over 2 } + 5 \)
-            </li>
-        </ul>
+        <div class="ecuacionEjemplo">        
+            \( (m \times 3) -2 = {7 \over 2 } + 5 \)
+        </div>
 
         <p>
-            Si se logra construir una nueva ecuación equivalente a esta, en la cual la incógnita
-            esté despejada, será posible descubrir el valor de la incógnita.
+            Sobre la incógnita \(m\) está aplicada una multiplicación por 3 y sobre ese resultado
+            aparece aplicada una resta de 2.
         </p>
 
-        <p>Para esto se sigue la siguiente estrategia:</p>
+        <p>
+            Si esas dos operaciones no estuvieran, entonces la \(m\) estaría despejada.
+        </p>
+        
+        <div class="nota">
+            <img src="bombillo.png" alt="Idea" style="width: 25px;">
+            Si se logra construir una nueva ecuación equivalente en la cual la incógnita
+            esté despejada, será posible descubrir el valor de la incógnita.
+        </div>
+            
+        
+
+        
+
+        <p>Para lograrlo, se sigue la siguiente estrategia:</p>
 
         <ul>
-            <li>Construir una nueva ecuación equivalente en la cual haya operaciones opuestas en el miembro donde está la incógnita.</li>
+            <li>Construir una nueva ecuación equivalente en la cual haya operaciones opuestas consecutivas en el miembro donde está la incógnita.</li>
             <li>Cancelar las operaciones opuestas.</li>
-        </ul>
-
-        <p>En el ejemplo, el miembro donde está la incógnita es \(m \times 3 \).
-            Para cancelar esa multiplicación por 3 hace falta una división entre 3.    
-        </p>
-
-        <div id="ejemplo1">
-            <button class="botonEjemplo1 botonEjemplo" v-on:click="stepEjemplo1===0?stepEjemplo1=1:stepEjemplo1=0">
-                {{stepEjemplo1===0?'iniciar':'reiniciar'}}
-            </button>
-            <transition name="caer">
-                <div class="ecuacionEjemplo1 ecuacionEjemplo" v-show="stepEjemplo1>0">
-                    <transition name="fade">
-                        <span>
-                            \( m \times 3\)
-                        </span>
-                    </transition>
-
-                    <span>
-                        \(= \)
-                    </span>
-
-                    <transition name=fade>
-                        <span>
-                            \(({7 \over 2 }) + 5 \)
-                        </span>
-                    </transition>
-                </div>
-            </transition>
-            <transition name="caer">
-                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1>=1">
-                    Esta es la ecuación original.
-                </div>
-            </transition>
-
-            <button class="botonEjemplo1 botonEjemplo botonPaso0" v-on:click="stepEjemplo1=2" v-show="stepEjemplo1>=1">
-                Crear una nueva ecuación aplicando división entre 3 a los miembros
-                de la ecuación original.
-            </button>
-
-            <transition name="caer">
-                <div class="ecuacionEjemplo1 ecuacionEjemplo" id="ecuacionConvertible1" v-show="stepEjemplo1>=2">
-                    <div class="bloqueConvertible" :class="{marco:stepEjemplo1===3}">                        
-                        <transition name=fade>
-                            <div class="convertible original" v-show="stepEjemplo1<4">
-                                \( ({m \times 3}) \over 3 \)
-                            </div>
-                        </transition>
-
-                        <transition name=fade>
-                            <div class="convertible conversion" v-show="stepEjemplo1>=4" style="left:40px ;">
-                                \( m \)
-                            </div>
-                        </transition>
-                    </div>
-
-                    <div>
-                        \(= \)
-                    </div>
-
-                    <div>
-                        \(({({7 \over 2 }) + 5}) \over 3 \)
-                    </div>
-                </div>
-            </transition>
-
-            <transition name="caer">
-                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1===2">
-                    Nueva ecuación.
-                </div>
-            </transition>
-
-            <transition name="entrarPorIzquierda">
-                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1===3">
-                    En este miembro hay operaciones contrarias consecutivas: Si se cancelan, el valor del miembro no cambia.
-                </div>
-            </transition>
-
-            <transition name="entrarPorIzquierda">
-                <div class="comentarioEjemplo1 comentarioEjemplo" v-show="stepEjemplo1>=4">
-                    Ahora \(m\) está despejada.
-                </div>
-            </transition>
-            <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1===2" v-on:click="stepEjemplo1=3">
-                Analizar operaciones </button>
-            <button class="botonEjemplo1 botonEjemplo" v-show="stepEjemplo1>=3"
-                v-on:click="stepEjemplo1<4?stepEjemplo1=4:stepEjemplo1=3">
-                {{ stepEjemplo1 < 4?'¡Cancelar!': 'Deshacer' }} </button>
-
-        </div>
+            <li>Repetir hasta que la incógnita esté despejada.</li>
+        </ul>       
+       
 
         
     </div>
@@ -146,16 +76,7 @@
 
 </html>
 
-<script>
-    const doc = new Vue({
-        el: "#doc",
-        data() {
-            return {
-                stepEjemplo1: 0,
-            }
-        }
-    })
-</script>
+
 
 
 <style>
@@ -167,88 +88,22 @@
         padding: 2% 5%;
     }
 
-    .miembroEcuacion {
-        height: 40px;
-        display: inline-block;
-        padding: 10px 5px;
-        border-radius: 5px;
+    li{
+        margin: 5px 0px;
     }
-
-    #ejemploAnimado {
-        justify-items: center;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(4);
-        align-items: center;
-        row-gap: 30px;
-    }
-
-    #botonesControl {
-        display: flex;
-        justify-content: center;
-        width: 250px;
-        margin: 20px auto;
-        grid-column: 1/3;
-    }
-
-    .botonStep {
-        border-radius: 10px;
-        border: 1px solid rgb(0, 0, 51);
-        cursor: pointer;
-        background-color: rgb(63, 247, 247);
-        width: 130px;
-        height: 40px;
-        text-align: center;
-        margin: 10px 10px;
-    }
-
-
-
-    #ejemplo1 {
-        border: 2px solid blueviolet;
-        border-radius: 20px;
-        padding: 10px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        row-gap: 10px;
-    }
-
-    .ecuacionEjemplo {
-        grid-column: 1/2;
-    }
-
-    .comentarioEjemplo {
-        grid-column: 2/3;
-    }
-
-    .botonEjemplo {
-        grid-column: 1/3;
-        max-width: 600px;
+    .nota {
+        background-color: rgb(233, 185, 150);
+        border-radius: 15px;
+        padding: 15px;
         margin: 10px auto;
-        padding: 10px;
+        width: min(650px, 90%);
     }
-
-    #ecuacionConvertible1{
-        display: flex;
-    }
-
-    .bloqueConvertible {
-        position: relative;
+    .ecuacionEjemplo{
         min-width: 100px;
-        min-height: 20px;        
-    }
-
-    .convertible {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .bloquePlaceholder {
-        visibility: hidden;
-    }
-
-    .botonPaso0 {
-        grid-row: 3/4;
+        text-align: center;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: cadetblue;
+        display: inline-block;
     }
 </style>
