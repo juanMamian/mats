@@ -137,15 +137,6 @@
     pointer-events: none;
 }
 
-.popIn-enter{
-    transform: scale(0.5);
-}
-.popIn-enter-active{
-    transition: all 0.2s;
-}
-.popIn-enter-to{
-    transform: scale(1.2);
-}
 
 .crecerHorizontal-enter{
     transform: scale(0.1, 1);

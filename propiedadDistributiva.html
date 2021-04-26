@@ -16,86 +16,64 @@
 
 <body>
     <div id="doc">
-        <p> En expresiónes numéricas formadas por:</p> 
-
-        <ul>
-            <li>Una operación entre dos números dentro de un paréntesis (Operación interna).</li>
-            <li>Una operación entre el paréntesis anterior y otro número (Operación externa)</li>
-        </ul>
-        
-        <p>Como estas:</p>               
-
-        <ul class="recuadro">
-            <li>\((3+7) \times 2\)</li>                        
-            <li>\(({18 \over 9}) + 5 \)</li>            
-            <li>\( (12-11) \over 3 \)</li>            
-            <li>\( (17 \times 19) \times 6 \) </li>
-            
-        </ul>        
-
-        <p>Si se distribuye la operación externa en los números
-            que están dentro del paréntesis, así:
-        </p>
-
-        <div id="ejemplo2">
-            <transition name="togglePorDerecha">
-                <div class="expresion expresionPrimerEjemplo primerTipo">\((3+7) \times 2\)</div>
-            </transition>
-            <button v-on:click.stop="distribuidaExpresion1=!distribuidaExpresion1" class="botonAplicarNuevaOperacion">{{distribuidaExpresion1?'Deshacer':'Distribuir la multiplicación por 2'}}</button>
-            <transition name="togglePorIzquierda">
-                <div class="expresion expresionPrimerEjemplo segundoTipo" v-show="distribuidaExpresion1">\( (3 \times 2)+(7 \times 2) \)</div>
-            </transition>
-
-            <transition name="togglePorDerecha">
-                <div class="expresion expresionPrimerEjemplo primerTipo">\(({18 \over 9}) + 5 \)</div>
-            </transition>
-            <button v-on:click.stop="distribuidaExpresion2=!distribuidaExpresion2" class="botonAplicarNuevaOperacion">{{distribuidaExpresion2?'Deshacer':'Distribuir la suma de 5'}}</button>
-            <transition name="togglePorIzquierda">
-                <div class="expresion expresionPrimerEjemplo segundoTipo" v-show="distribuidaExpresion2">\(({18 +5}) \over ({9 + 5})  \)</div>
-            </transition> 
-
-            <transition name="togglePorDerecha">
-                <div class="expresion expresionPrimerEjemplo primerTipo">\( (12-11) \over 3 \)</div>
-            </transition>
-            <button v-on:click.stop="distribuidaExpresion3=!distribuidaExpresion3" class="botonAplicarNuevaOperacion">{{distribuidaExpresion3?'Deshacer':'Distribuir la división entre 3'}}</button>
-            <transition name="togglePorIzquierda">
-                <div class="expresion expresionPrimerEjemplo segundoTipo" v-show="distribuidaExpresion3">\( ({12 \over 3})-({11 \over 3}) \)</div>
-            </transition>
-
-            <transition name="togglePorDerecha">
-                <div class="expresion expresionPrimerEjemplo primerTipo">\( (17 \times 19) \times 6 \)</div>
-            </transition>
-            <button v-on:click.stop="distribuidaExpresion4=!distribuidaExpresion4" class="botonAplicarNuevaOperacion">{{distribuidaExpresion4?'Deshacer':'Distribuir la multiplicación por 6'}}</button>
-            <transition name="togglePorIzquierda">
-                <div class="expresion expresionPrimerEjemplo segundoTipo" v-show="distribuidaExpresion4">\( (17 \times 6) \times (19 \times 6)  \) </div>
-            </transition>
+        <div class="nota">
+            <img src="bombillo.png" alt="idea" style="width: 25px;">
+            Al realizar una distribución se genera una nueva expresión numérica. Esa nueva expresión numérica puede ser del mismo valor que la original
+            o puede tener un valor distinto.
+        </div>
+        <br><br>
+        <div class="nota">
+            <img src="bombillo.png" alt="idea" style="width: 25px;">
+            Si la nueva expresión numérica generada al realizar la distribución es de igual valor que la original, se dice que la expresión
+            original es distributiva.
         </div>
 
-        <p>Se obtiene una nueva expresión numérica en cada caso.</p>
+        <div class="recuadro">
+            <div class="tituloEjemplo">Ejemplo 1</div>
+            <p>La expresión: </p>
+            <div class="expresion">
+                \( (7 +16) \times 4 \)
+            </div>
 
-        <p>En ocasiones, la expresión numérica obtenida al realizar la distribución
-            es de igual valor a la expresión numérica original.
-        </p>
+            Es un 92.
 
-        <p>
-            Si para determinadas operaciones externa e interna, la nueva expresión 
-            obtenida es igual a la original sin importar los números escogidos, se dice que:
-        </p>        
+            <p>Si se realiza una distribución, se obtiene la siguiente expresión:</p>
 
-        <ul>
-            <li>
-                La operación externa es distributiva en la operación interna.
-            </li>
-            <li>
-                La operación externa es distributiva sobre la operación interna.
-            </li>
-            <li>
-                La operación externa es distributiva respecto de la operación interna.
-            </li>
-            <li>
-                La operación externa cumple la propiedad distributiva sobre la operación interna.
-            </li>
-        </ul>
+            <div class="expresion">
+                \( (7 \times 4) + (16 \times 4) \)
+            </div>
+
+            <p>Que también es un 92.</p>
+
+            <div class="conclusion">
+                <img src="conclusion.png" alt="Conclusión" style="width: 25px;">
+                Así que es una expresión distributiva
+            </div>
+        </div><br>
+
+        <div class="recuadro">
+            <div class="tituloEjemplo">Ejemplo 2</div>
+            <p>La expresión: </p>
+            <div class="expresion">
+                \( ({12 \over 3}) + 5 \)
+            </div>
+
+            Es un 9.
+
+            <p>Si se realiza una distribución, se obtiene la siguiente expresión:</p>
+
+            <div class="expresion">
+                \( (12 + 5) \over (3+5) \)
+            </div>
+
+            <p>Que es un 2.125.</p>
+
+            <div class="conclusion">
+                <img src="conclusion.png" alt="Conclusión" style="width: 25px;">
+                Así que esta no es una expresión distributiva
+            </div>
+        </div>
+       
 
     </div>
 </body>
@@ -103,19 +81,10 @@
 </html>
 
 <script>
-    const doc=new Vue({
-        el:"#doc",
-        data(){
+    const doc = new Vue({
+        el: "#doc",
+        data() {
             return {
-                formadaExpresion1:false,
-                formadaExpresion2:false,
-                formadaExpresion3:false,
-                formadaExpresion4:false,
-
-                distribuidaExpresion1:false,
-                distribuidaExpresion2:false,
-                distribuidaExpresion3:false,
-                distribuidaExpresion4:false,
             }
         }
     })
@@ -129,39 +98,55 @@
     li {
         margin: 10px;
     }
-    button{
-        padding: 5px;
+
+    button {
+        padding: 15px 5px;
     }
-    #ejemplo1 {
-        display: grid;
-        padding: 20px;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-auto-rows: 100px;
-        border: 2px solid cadetblue;
-        border-radius: 15px;
-        row-gap: 10px;
-        align-items: center;
+    .tituloEjemplo{
+        font-size: 13px;
+        font-style: italic;
+        color: rgb(71, 71, 71);
     }
-    #ejemplo2{
-        display: grid;
-        padding: 20px;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-auto-rows: 100px;
-        border: 2px solid cadetblue;
-        border-radius: 15px;
-        row-gap: 10px;
-        align-items: center;
-    }
-    .primerTipo{
+
+
+    .primerTipo {
         grid-column: 1/2;
     }
-    .botonAplicarNuevaOperacion{
+
+    .botonAplicarNuevaOperacion {
         grid-column: 2/3;
     }
-    .segundoTipo{
+
+    .segundoTipo {
         grid-column: 3/4;
+    }    
+
+    .nota {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(233, 185, 150);
+        padding: 15px;
+        width: min(600px, 90%);
     }
-    .expresion{
+    .recuadro{
+        display: block;
+        margin: 10px auto;
+        width: min(600px, 90%);
+    }
+    .expresion {
+        padding: 10px 15px;
+        border-radius: 15px;
+        background-color: cadetblue;
+        width: 150px;
         text-align: center;
+        margin: 10px 5px;
+    }
+    .conclusion{
+        
+        padding: 10px 15px;
+        border-radius: 15px;
+        margin: 10px 5px;
+        width: min(90%, 500px);
+        background-color: rgb(209, 127, 33);
     }
 </style>

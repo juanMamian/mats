@@ -17,19 +17,21 @@
 
 <body>
     <div id="doc">
-        Cuando se conmuta una expresión, la nueva expresión puede tener el mismo valor que
-        la expresión original o puede tener un valor distinto.
-
-        <div class="definicion">
-            <img src="bombillo.png" alt="Idea" class="bombillito">
-            Si al conmutar una expresión, la nueva expresión obtenida tiene el mismo
-            valor que la original, se dice que es una expresión <span class="resaltadoHorizontal"
-                style="background-color: cadetblue;">conmutativa</span>. Quiere decir que su valor
-                sigue siendo el mismo después de conmutada.
+        <div class="nota">
+            <img src="bombillo.png" alt="idea" style="width: 25px;">
+            Al realizar una conmutación se genera una nueva expresión numérica. Esa nueva expresión numérica puede ser del mismo valor que la original
+            o puede tener un valor distinto.
+        </div>
+        <br><br>
+        <div class="nota">
+            <img src="bombillo.png" alt="idea" style="width: 25px;">
+            Si la nueva expresión numérica generada al realizar la conmutación es de igual valor que la original, se dice que la expresión
+            original es conmutativa.
         </div>
 
-        <p>Ejemplos: </p>
+        
         <div class="recuadro">
+            <div class="tituloEjemplo">Ejemplo 1</div>
 
             <p>La expresión: </p>
             <div class="expresion">
@@ -53,6 +55,7 @@
         </div>
 <br>
         <div class="recuadro">
+            <div class="tituloEjemplo">Ejemplo 2</div>
 
             <p>La expresión: </p>
             <div class="expresion">
@@ -71,7 +74,7 @@
 
             <div class="conclusion">
                 <img src="conclusion.png" alt="Conclusión" class="conclusionsita">
-                Así que esta expresión no es conmutativa
+                Así que no es una expresión conmutativa
             </div>
         </div>
 
@@ -99,7 +102,11 @@
         margin: 30px auto;
         width: min(90%, 500px);
     }
-
+    .tituloEjemplo{
+        font-size: 13px;
+        font-style: italic;
+        color: rgb(71, 71, 71);
+    }
     .expresion {
         padding: 10px 15px;
         border-radius: 15px;
@@ -119,7 +126,15 @@
     .conclusionsita{
         width: 25px;
     }
+    .nota {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(233, 185, 150);
+        padding: 15px;
+        width: min(600px, 90%);
+    }
     .recuadro{
+        display: block;
         margin: 10px auto;
         width: min(600px, 90%);
     }
