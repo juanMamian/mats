@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
     <link rel="stylesheet" href="animacionesVue.css">
+    <link rel="stylesheet" href="estilosGenerales.css">
 
     <title>Entrenamiento en expresiones numéricas simples</title>
 </head>
@@ -28,6 +29,7 @@
             
             <transition name="fantasmaIn">
                 <div class="instruccion" v-show="mostrarReto1">
+                    <img src="bandera.png" alt="Objetivo" class="iconoTexto">
                     ¡Escribe una expresión numérica que represente el {{numero1}}
                     usando una {{operacion1}} entre dos números!
                 </div>
@@ -85,12 +87,7 @@
 
 <style>
 
-    body{
-        padding: 2% 5%;
-    }
-    button{
-        padding: 15px 20px;
-    }
+   
     #numero1{
         margin: 10px auto;
         display: inline-block;
@@ -98,13 +95,7 @@
         border-radius: 7px;
         background-color: cadetblue;
     }
-    .instruccion {
-        background-color: rgb(174, 202, 235);
-        border-radius: 15px;
-        padding: 15px;
-        margin: 10px auto;
-        width: min(650px, 90%);
-    }
+ 
 
     .fantasmaIn-enter{
         opacity: 0;

@@ -7,13 +7,17 @@
     <title> El juego de la división</title>
 </head>
 <body>
-    <h1>El juego de la división</h1>
+    <center><h1>El juego de la división</h1></center>
 
     <p>En este juego puedes seleccionar un número entre el 1 y el 15
         y dividirlo entre un número menor o igual que 6.
     </p>
 
-    <p>Presiona la banderita verde para iniciar y reiniciar el juego</p>
+    <div class="instruccion">
+        <img src="signal.png" alt="Instrucción" style="width: 25px;">
+        Para iniciar o reiniciar el juego presiona la banderita verde.
+    </div>
+    
     <iframe src="https://scratch.mit.edu/projects/512545197/embed" frameborder="0" id="iframeJuego"></iframe>
     
 </body>
@@ -32,6 +36,13 @@
         background-repeat: no-repeat;
         margin: 10px auto;
         display: block;
+    }
+    .instruccion {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(150, 233, 157);
+        padding: 15px;
+        width: min(600px, 90%);
     }
 </style>
 

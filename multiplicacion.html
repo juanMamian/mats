@@ -21,7 +21,10 @@
 <body>
     <div id="doc">
 
-        <p>Multiplicación significa repetición. Así que multiplicar un número significa repetirlo.</p>
+        <div class="nota">
+            <img src="bombillo.png" alt="Idea" style="width: 25px;">
+            Multiplicación significa repetición. Así que multiplicar un número significa repetirlo.
+        </div>        
 
         <p>En la sección "El juego de la multiplicación" puedes multiplicar números representado por bolitas.</p>
 
@@ -42,53 +45,12 @@
 <style>
     body {
         padding: 2% 5%;
-    }
-
-    p{
-        font-size: 20px;
-    }
-
-    button{
-        padding: 10px 20px;
-    }
-
-    #ejemplo1 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        justify-items: center;
-        row-gap: 10px;
-    }
-
-    .transversal {
-        grid-column: 1/3;
-    }
-
-    .columnaDerecha {
-        grid-column: 2/3;
-    }
-
-    .bolita {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: chocolate;
-        margin: 5px;
-        display: inline-block;
-    }
-
-    #dibujoNumero1{
-        text-align: center;
-    }
-
-    .cuadrito {
-        padding: 5px 10px;
-        min-width: 100px;
-        min-height: 30px;
-        margin: 2px 0px;
-        text-align: center;
-        overflow: hidden;   
-    }
-    .recuadrito{
-        border: 1px solid cadetblue;
+    }  
+    .nota {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(233, 185, 150);
+        padding: 15px;
+        width: min(600px, 90%);
     }
 </style>

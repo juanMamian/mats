@@ -17,27 +17,25 @@
 
 <body>
     <div id="doc">
-        <center>
-            <label for="selectorDificultad">Selecciona el nivel de dificultad</label>
-            <div id="dificultad">{{dificultad}}</div>
-            <input type="range" name="selectorDificultad" min="1" max="5" v-model="dificultad">
-            <br>
-            <button v-on:click="generarEcuacionOriginal(); ecuacionGenerada=true;">¡Generar una ecuación!</button>
+       
 
-            <div :key="versionEcuacionOriginal" id="ecuacionOriginal">
-                {{ecuacionOriginal}}
+        <div class="recuadro">
+            <div class="tituloRecuadro">
+                
             </div>
-
-            <div class="instruccion recuadro" v-show="ecuacionGenerada">
-                ¡Despeja la incógnita de esta ecuación para conocer su valor!
-            </div>
-
-            <div class="nota recuadro" v-show="ecuacionGenerada">
-                <img src="alerta.png" alt="alerta">
-                No olvides verificar si al introducir el número descubierto en la ecuación original
-                la igualdad es verdadera.
-            </div>
-        </center>
+            <center>
+                <label for="inputDificultad">Selecciona la dificultad</label><br>
+                <input name="inputDificultad" type="range" min="1" max="5" v-model="dificultad"><br>
+                <button @click="generarEcuacionPorTerminos">¡Generar ecuación!</button>
+                <div id="ecuacionTerminos" :key="versionEcuacionTerminos"><br>
+                    {{ecuacionPorTerminos}}
+                </div>
+<br><br>
+                <div class="instruccion" v-show="ecuacionPorTerminos">
+                    ¡Descubre la solución de esta ecuación!
+                </div>
+            </center>
+        </div>
     </div>
 
 </body>
@@ -45,131 +43,167 @@
 </html>
 
 <script>
+
     const doc = new Vue({
         el: "#doc",
         data() {
             return {
-                numero1: null,
-                numero2: null,
-                numero3: null,
-                numero4: null,
+               
                 dificultad: 1,
 
                 ecuacionOriginal: null,
-                incognitaIntroducida:false,
+                ecuacionPorTerminos:null,
+                incognitaIntroducida: false,
+                incognitasIntroducidas:0,
                 versionEcuacionOriginal: 0,
+                versionEcuacionTerminos:0,
 
                 ecuacionGenerada: false,
 
                 probIncognita: 0.5,
+                letraIncognita:null,
+
+                letrasParaIncognita:"abcdefghijklmnpqrstuvwxyz",
+
+                ecuaciones: [
+                    [
+                        "\\( 2a + 18 =48 \\)",
+                        "\\( {5d \\over 2 }=50 \\)",
+                        "\\( {3t - 12 }=48 \\)",
+                        "\\( { (4+2) \\times k }=24 \\)",
+                        "\\( { {4 \\over 2} + m }=24 \\)",
+                        "\\( { 18 - l }=40 \\)",
+                        "\\( 12=20-k \\)",
+                        "\\( 7=15-r \\)",
+                        "\\( 12=7+j-5 \\)",
+                        "\\( 12+{p \\over 3} =28 \\)",
+
+                    ],
+                    [
+                        "\\( { 16 \\over g} =2 \\)",
+                        "\\( { 25 \\over {g+4}} =5 \\)",
+                        "\\( { 20 ={{134+6} \\over n }\\)",
+                        "\\(  55 = {  5 + {100 \\over {p+14} }  } \\)",
+                        "\\(  14 = {  7 + 25 \\over a + 2  } \\)",
+                    ],
+                    [
+                        "\\(  55 = {  5 + {100 \\over {p+14} }  } \\)",
+                        "\\(  55 = {  5 + {100 \\over {p+14} }  } \\)",
+
+                    ]
+                ],
+                numEcuacionSeleccionada: null
 
             }
         },
         methods: {
-            generarEcuacionOriginal() {
-                console.log(`Dificultad: ${this.dificultad}`);                
-                var dif = (parseInt(this.dificultad)+1);
-                console.log(`Dif: ${dif}`);
-                this.incognitaIntroducida=false;
-                this.probDistribuible = 0.5;
-                var numero1 = this.generarNumero(parseInt(dif));
-                dif--;
-                dif--;
+            
+            generarEcuacionPorTerminos(){
+                var dif = parseInt(this.dificultad)+1;
+                this.incognitasIntroducidas=0;
+                this.generarLetraIncognita();
+                
+                var posicionIgual=1+Math.round(Math.random()*(dif-1));
+                console.log(`Posicion igual: ${posicionIgual}`);
+                var terminos=[];                
 
-                var numero2 = this.generarNumero(parseInt(dif));
-                dif--;
-               
-                var { opPrimaria, opSecundaria } = this.generarOperaciones();
+                for(var j=0;j<(dif+1);j++){
+                    console.log(`Creando término ${j}`);
+                    terminos.push(this.generarNumeroTerminos(dif-1-(j*1.2), true));
+                }
 
-                var expresion = "{"+numero1.substr(3, (numero1.length-6)) + "}=" + numero2;
+                terminos=terminos.sort((a,b)=>0.5-Math.random());
 
-                console.log(`Expresión final: ${expresion}`);
-                this.ecuacionOriginal = "\\(" + expresion + "\\)";
+                var ecuacionFinal=terminos[0];
+                for(var i=1; i<(dif+1);i++){
+                    console.log(`Pegando término ${i}`);
+                    let termino=terminos[i]
+                    let sumaResta=Math.random()>0.5?" + ": " - ";
+                    let union=sumaResta;
+                    if(posicionIgual==i)union=" = "
+                    ecuacionFinal=ecuacionFinal + union + termino;
+                }
+                this.versionEcuacionTerminos++;
+                this.ecuacionPorTerminos="\\(" + ecuacionFinal +" \\)";
 
-                this.versionEcuacionOriginal++;
-                this.$nextTick(() => {
+                this.$nextTick(()=>{
                     MathJax.typeset();
-                });
-
-
-            },
-            generarNumero(dif) {
-                console.log(`Generando número con dif: ${dif}`);
-                const compuesto = (dif > 1);
-                if (compuesto) {
+                })
+            },           
+            generarNumeroTerminos(dif, incognitable){
+                const compuesto=(dif>1);
+               // if(!confirm("continuar"))return;
+                if(compuesto){
                     console.log(`Compuesto`);
-                    var numero1 = this.generarNumero(dif - 1);
+                    var {opPrimaria, opOpuesta}=this.generarOperaciones();                    
+
                     dif--;
-                    var numero2 = this.generarNumero(dif - 1);
-                    dif--;
-                    if(!this.incognitaIntroducida){
-                        numero1=this.generarLetra();
-                        this.incognitaIntroducida=true;
+
+                    var num1Incognitable=false;
+                    var num2Incognitable=false;
+
+                    if(opPrimaria==" \\over "){
+                        num1Incognitable=true;
+                        num2Incognitable=false;
                     }
-                    // else if (Math.random() > 0.5) {
-                    //     //Intercambiar el valor de las variables
-                    //     console.log(`Intercambiando entre `);
-                    //     console.log(`${numero1}`);
-                    //     console.log(`${numero2}`);
+                    else{
+                        if(Math.random()<0.5){
+                            num1Incognitable=true;
+                            num2Incognitable=false;
+                        }
+                        else{
+                            num1Incognitable=false;
+                            num2Incognitable=true;
+                        }
+                    }
+                    if(!incognitable){
+                        num1Incognitable=false;
+                        num2Incognitable=false;
+                    }
 
-                    //     var temp = numero1;
-                    //     numero1 = numero2;
-                    //     numero2 = temp;
-                    // }
+                    var numero1=this.generarNumeroTerminos(dif, num1Incognitable);                    
+                    var numero2=this.generarNumeroTerminos(dif, num2Incognitable);
 
-                    var { opPrimaria, opSecundaria } = this.generarOperaciones();
+                    var expresion=numero1 + opPrimaria + numero2;
 
-                    var numeroCompuesto = "{({" + numero1 + opPrimaria + numero2 + "})}";                   
-                    return numeroCompuesto;
+                    expresion="{"+expresion+"}"
+                    if(opPrimaria==" + " || opPrimaria==" - "){
+                        expresion="{("+expresion+")}";
+                    }
+
+                    return expresion;
+
                 }
-                else {
-                    return (Math.random() * 50).toFixed();
+                else{
+                    if(incognitable && this.incognitasIntroducidas<parseInt(this.dificultad)){
+                        this.incognitasIntroducidas++;
+                        return this.letraIncognita;
+                    }
+                    return Math.round(Math.random()*20);
                 }
+            },            
+            generarLetraIncognita(){
+                this.letraIncognita=this.letrasParaIncognita[Math.floor(Math.random()*25)];
             },
             generarOperaciones() {
-                const rand1 = Math.floor(Math.random() * 4);
-                const rand2 = Math.floor(Math.random() * 4);
-
-                var opPrimaria = " + ";
-                var opSecundaria = " + ";
-
-                console.log(`Generando operacion ${rand1} y ${rand2}`);
-                if (rand1 < 1) {
-                    opPrimaria = " + ";
+                const rand = Math.floor(Math.random() * 4);
+                console.log(`Generando operacion ${rand}`);
+                if (rand < 1) {
+                    return { opPrimaria: " + ", opOpuesta: " - " };
                 }
-                else if (rand1 < 2) {
-                    opPrimaria = " - ";
+                if (rand < 2) {
+                    return { opPrimaria: " - ", opOpuesta: " + " }
                 }
-                else if (rand1 < 3) {
-                    opPrimaria = " \\times "
+                if (rand < 3) {
+                    return { opPrimaria: " \\cdot ", opOpuesta: " \\over " }
                 }
-                else if (rand1 < 4) {
-                    opPrimaria = " \\over "
+                if (rand < 4) {
+                    return { opPrimaria: " \\over ", opOpuesta: " \\cdot " }
                 }
-
-                if (rand2 < 1) {
-                    opSecundaria = " + ";
-                }
-                else if (rand2 < 2) {
-                    opSecundaria = " - ";
-                }
-                else if (rand2 < 3) {
-                    opSecundaria = " \\times "
-                }
-                else if (rand2 < 4) {
-                    opSecundaria = " \\over "
-                }
-
-                console.log(`Generadas: ${opPrimaria} y ${opSecundaria}`);
-                return { opPrimaria, opSecundaria };
-            },
-            generarLetra(){
-                const letras="abcdefghijklmnopqrstuvwxyz";
-
-                const indexLetra=Math.floor(Math.random()*letras.length);
-                return letras[indexLetra];
+                return { opPrimaria: " + ", opOpuesta: " - " };
             }
-        }
+        },
+        
     })
 
 </script>
@@ -185,6 +219,10 @@
 
     button {
         padding: 10px;
+        margin: 10px auto;
+    }
+    .recuadro{
+        width: min(600px, 90%);
         margin: 10px auto;
     }
 </style>

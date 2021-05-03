@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+    <title>División</title>
+</head>
+
+<body>
+    <div id="doc">
+        <div class="nota">
+            <img src="bombillo.png" alt="Idea" style="width: 25px;">
+            Dividir significa repartir parejo. Al dividir un número, se reparte parejo en grupos para saber qué número
+            es cada grupo.
+        </div>
+
+        <p>
+            En el siguiente cuadro se reparte parejo un número.
+        </p>
+
+        <div id="ejemplo1" class="cuadroEjemplo">
+            <center>
+
+                <button v-show="stepEjemplo1==0" style="justify-self: center;" @click="stepEjemplo1=1">Iniciar</button>
+                <br>
+                <button :style="{visibility: stepEjemplo1>=5?'visible':'hidden'}"
+                    @click="reiniciarEjemplo1">Reiniciar</button> <br>
+
+                <button class="botonCrearNum" v-show="stepEjemplo1==1" @click="stepEjemplo1++">
+                    ¡Imaginar un 12!
+                </button>
+                <br>
+                <div id="contenedorNumeroDoce" class="contenedorNumeroBolitas" v-show="stepEjemplo1>0">
+                    <transition name="fadeIn" v-on:after-enter="stepEjemplo1++">
+                        <div id="numeroDoce" class="numeroBolitas" v-show="stepEjemplo1>=2">
+                            <transition-group name="salirRestadas" v-on:after-leave="stepEjemplo1=5">
+                                <div class="bolita" v-for="numero of 12" :key="'numero1'+numero"
+                                    :style="{ left: stepEjemplo1>=4?(-15+(Math.ceil(numero/4)*33))+'%':(numero*30)+'px', bottom: stepEjemplo1>=4?( ((numero%4)*30))+'px': '170px'}">
+                                </div>
+                            </transition-group>
+                        </div>
+                    </transition>
+                </div>
+                <br>
+
+                <button v-show="stepEjemplo1==3" @click="stepEjemplo1++">¡Repartir parejo en 3 grupos!</button>
+
+                <transition name="fadeInEsperando" v-on:after-enter="stepEjemplo1++">
+                    <div class="conclusion" v-show="stepEjemplo1>=4">
+                        <img src="conclusion.png" alt="Conclusión" style="width: 25px">
+                        Cada grupo es un número 4. ¡12 dividido entre 3 da como resultado 4!
+                    </div>
+                </transition>
+            </center>
+        </div>
+
+        <div class="nota">
+            <img src="bombillo.png" alt="Idea" style="width: 25px;">
+            Para representar una <span class="resaltado" style="background-color: cadetblue;">division de doce entre tres</span> se escribe         
+            <span class="resaltado" style="background-color: cadetblue; padding: 10px 0px;">\(12 \over 3\) </span> </p>
+                        
+        </div>
+
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                stepEjemplo1: 0,
+
+            }
+        },
+        methods: {
+            reiniciarEjemplo1() {
+                this.stepEjemplo1 = 0;
+
+
+            }
+        }
+    })
+</script>
+
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    .nota {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(233, 185, 150);
+        padding: 15px;
+        width: min(600px, 90%);
+    }
+
+    button{
+        padding: 15px;
+    }
+
+    .cuadroEjemplo {
+        padding: 20px 20px;
+        border: 2px solid cadetblue;
+        border-radius: 10px;
+        margin: 20px 0px;
+    }
+
+    .contenedorNumeroBolitas {
+        position: relative;
+        
+    }
+
+    .bolita {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: chocolate;
+        margin: 5px;
+        position: absolute;
+        transition: left 3s, bottom 3s;
+    }
+
+    .numeroBolitas {
+        text-align: center;        
+        height: 200px;
+        position: relative;
+
+    }
+    #numeroDoce{
+        width: 420px;
+    }
+
+    .conclusion {
+        padding: 10px 15px;
+        border-radius: 15px;
+        margin: 10px 5px;
+        width: min(90%, 650px);
+        background-color: rgb(209, 127, 33);
+        margin: 10px auto;
+    }
+
+    .fadeIn-enter {
+        opacity: 0;
+    }
+
+    .fadeIn-enter-active {
+        transition: opacity 0.8s;
+    }
+
+    .fadeIn-enter-to {
+        opacity: 1;
+    }
+
+    .fadeInEsperando-enter-active{
+        animation: entrarEsperando 4s
+    }
+
+    .resaltado {
+        padding: 2px 3px;
+        border-radius: 2px;
+    }
+    @keyframes entrarEsperando{
+        0%{opacity: 0;}
+        80%{opacity: 0;}
+        100%{opacity: 1;}
+    }
+</style>

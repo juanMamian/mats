@@ -1,0 +1,74 @@
+body{
+    padding: 2% 5%;    
+}
+
+button{
+    padding: 10px 15px;
+}
+
+.conclusion {
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 10px 5px;
+    width: min(90%, 650px);
+    background-color: rgb(209, 127, 33);
+    margin: 10px auto;
+}
+.instruccion {
+    background-color: rgb(174, 202, 235);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px auto;
+    width: min(650px, 90%);
+}
+
+.nota {
+    margin: 5px auto;
+    border-radius: 15px;
+    background-color: rgb(233, 185, 150);
+    padding: 15px;
+    width: min(600px, 90%);
+}
+
+.informacion {
+    margin: 5px auto;
+    border-radius: 15px;
+    background-color: rgb(208, 206, 72);
+    padding: 15px;
+    width: min(600px, 90%);
+}
+.resaltado {
+    padding: 2px 3px;
+    border-radius: 2px;
+}
+.iconoTexto{
+    width: 25px;
+}
+
+.fadeIn-enter-active{
+    animation: fadeIn 1.5s;
+}
+
+.fadeInAndOut-enter-active{
+    animation: fadeIn 1.5s;
+}
+
+.fadeInAndOut-leave-active{
+    animation: fadeIn 1.5s reverse;
+}
+
+@keyframes fadeIn{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+.popIn-enter-active{
+    animation: popIn 0.3s;
+    
+}
+
+@keyframes popIn{
+    0%{scale: 0.1;}
+    98%{scale: 1.2;}
+    100%{scale: 1;}
+}
