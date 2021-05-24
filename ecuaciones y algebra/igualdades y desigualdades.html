@@ -7,16 +7,17 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <title>Igualdades y desigualdades</title>
+
+    <link rel="stylesheet" href="estilosGenerales.css">
 </head>
 
 <body>
 
-    <p>Es posible hacer algunas afirmaciones acerca
-        de la igualdad o desigualdad de las personas.
+    <p>
+        Al comparar personas se pueden hacer afirmaciones como:
     </p>
-
-    <p>Afirmaciones como:</p>
-    <div class="cuadrito">
+    
+    <div class="cuadroEjemplo">
         <ul>
             <li>Jose es más alto que Juan</li>
             <li>Rosita es igual de alta que Jennifer</li>
@@ -24,9 +25,14 @@
         </ul>
     </div>
 
-    <p>Con los números sucede lo mismo. Al compararlos, es posible hacer afirmaciones sobre ellos. Por ejemplo:
+    <div class="nota">
+        <img src="bombillo.png" alt="Idea" class="iconoTexto">
+        A esta clase de afirmaciones se las llama <span class="resaltado" style="background-color: cadetblue;">Afirmaciones Comparativas</span> 
+    </div>    
+
+    <p>Con los números sucede lo mismo: al compararlos, es posible hacer afirmaciones comparativas sobre ellos. Por ejemplo:
     </p>
-    <div class="cuadrito">
+    <div class="cuadroEjemplo">
         <ul class="primario">
             <li>El dos es más grande que el uno</li>
             <li>El siete es más grande que el cinco</li>
@@ -36,7 +42,7 @@
     </div>
 
     <p>
-        Para escribir esas afirmaciones se usan tres símbolos.
+        Para escribir esta clase de afirmaciones se usan tres símbolos.
     </p>
 
     <ul>
@@ -47,11 +53,11 @@
         </li><br>
     </ul>
 
-    <p>Gracias a ellos, las afirmaciones de arriba se pueden escribir de forma más concisa ¡Has click en el siguiente
-        cuadrito
+    <p>Gracias a ellos, las afirmaciones de arriba se pueden abreviar ¡Has click en el siguiente
+        cuadro
         para probar!</p>
 
-    <div class="cuadrito revelable" id="cuadro1" onclick="revelar(event)">
+    <div class="cuadroEjemplo revelable" id="cuadro1" onclick="revelar(event)">
         <ul class="primario">
             <li>El dos es más grande que el uno</li>
             <li>El siete es más grande que el cinco</li>
@@ -66,13 +72,21 @@
         </ul>
     </div>
 
-    <p>Cuando afirmamos que dos números son iguales, decimos que hemos escrito una <span class="rojo">Igualdad</span> .
-        Cuando uno es mayor o menor que el otro,
-        decimos que hemos escrito una <span class="rojo">Desigualdad</span>
+    <p>
+        <ul>
+            <li>
+                Cuando se afirma que dos números son iguales, se ha escrito una <span class="resaltado" style="background-color: cadetblue;">Igualdad</span> .
+            </li>
+            <li>
+                Cuando se afirma que un número es mayor o menos que otro,
+                se ha escrito una <span class="resaltado" style="background-color: cadetblue;">Desigualdad</span>
+            </li>
+        </ul>
+        
+        
     </p>
 
-    <p>Las igualdades y las desigualdades también se escriben acerca de números
-        en forma de expresión numérica:
+    <p>Las igualdades y las desigualdades también se escriben acerca de expresiones numéricas:
     </p>
 
     <p>como estos números:</p>
@@ -86,7 +100,7 @@
 
     <p>Acerca de ellos se puede afirmar que:</p>
 
-    <div class="cuadrito" id="cuadro2" onclick="revelar2(event)">
+    <div class="cuadroEjemplo" id="cuadro2" onclick="revelar2(event)">
         
         <ul class="secundario">
             <li>\(4 \times 2<9 \times 8 \)</li>
@@ -105,13 +119,7 @@
 </html>
 
 <style>
-    body {
-        padding: 2% 5%;
-        font-size: 20px;
-    }
-li{
-    margin: 10px 0px;
-}
+   
     h1 {
         padding-left: 10px;
     }

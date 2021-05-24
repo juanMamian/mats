@@ -31,6 +31,7 @@ li{
     padding: 15px;
     width: min(600px, 90%);
 }
+
 .tituloEjemplo {
     font-size: 13px;
     font-style: italic;
@@ -52,7 +53,7 @@ li{
     width: min(600px, 90%);
 }
 .resaltado {
-    padding: 2px 3px;
+    padding: 0px 3px;
     border-radius: 2px;
 }
 .subrayado{
