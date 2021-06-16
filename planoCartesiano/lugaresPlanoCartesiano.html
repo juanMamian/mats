@@ -62,10 +62,10 @@
                 </div>
             </transition>
             
-            <div id="zonaEjes" @mousedown.left.self="planoAgarrado=true" @mouseup.left="mouseUpPlano" @mousemove="panPlano">
+            <div id="zonaEjes" @mousedown.left.self="planoAgarrado=true" @mouseup.left="mouseUpPlano" @mousemove="panPlano" @touchstart="inicioPanMobile" @touchmove.stop.prevent="panPlanoMobile">
                 <div class="eje" id="ejeHorizontal" :style="[posEjeH]">
                     <div class="bolita" :class="{bolitaOrigen:Math.ceil(posEsquina.x)+numero-2==0}" v-for="numero of numerosHorizontales+2" :style="[ {left: ( ((numero-2)*distanciaNumeros)-((posEsquina.x%1)*distanciaNumeros) )+'px'} ]">
-                        <div class="etiquetaNumero etiquetaNumeroH">
+                        <div class="etiquetaNumero etiquetaNumeroH" :style="[estiloNumero]">
                             {{(posEsquina.x>0?Math.floor(posEsquina.x):Math.ceil(posEsquina.x))+numero-2}}
                         </div>
                     </div>
@@ -73,7 +73,7 @@
             
                 <div class="eje" id="ejeVertical" :style="[posEjeV]">
                     <div class="bolita" v-for="numero of (numerosVerticales+1)" :class="{bolitaOrigen:Math.ceil(posEsquina.y)-numero==0}" :style="[ {top: ( ((numero-1)*distanciaNumeros)+((posEsquina.y%1==0?1:posEsquina.y%1)*distanciaNumeros) )+'px'} ]">
-                        <div class="etiquetaNumero etiquetaNumeroV">
+                        <div class="etiquetaNumero etiquetaNumeroV" :style="[estiloNumero]">
                             {{(posEsquina.y>0?Math.floor(posEsquina.y):Math.ceil(posEsquina.y))-(numero-1)}}
                         </div>
                     </div>
@@ -120,9 +120,24 @@
                 planoAgarrado:false,
                 planoPanned:false,
                 zoom:100,
+
+                lastPlanoX:0,
+                lastPlanoY:0,
             }
         },
         methods:{
+            inicioPanMobile(e){
+                this.lastPlanoX = e.changedTouches[0].clientX;
+                this.lastPlanoY = e.changedTouches[0].clientY;
+            },
+            panPlanoMobile(e){
+                const deltaX = e.changedTouches[0].clientX - this.lastPlanoX;
+                const deltaY = e.changedTouches[0].clientY - this.lastPlanoY;
+                this.lastPlanoX = e.changedTouches[0].clientX;
+                this.lastPlanoY = e.changedTouches[0].clientY;
+                
+                this.desplazarVista(deltaX, deltaY);
+            },
             panPlano(e){
                 if(!this.planoAgarrado){
                     return
@@ -166,6 +181,11 @@
             }   
         },
         computed:{
+            estiloNumero(){
+                return {
+                    fontSize: Math.round(this.distanciaNumeros/3)+"px"
+                }
+            },
             factorZoom(){
                 console.log(`Factor: ${this.zoom/100}`);
                 return Number((this.zoom/100).toFixed(2));
@@ -295,6 +315,10 @@
             elemPlano.style.height=alto+"px";
             elemPlano.style.width=ancho+"px";
 
+
+            this.distanciaNumeros=Math.ceil(ancho/13);
+            if(this.distanciaNumeros<30)this.distanciaNumeros=30;
+
             this.$set(this.sizePlano, "x", ancho);
             this.$set(this.sizePlano, "y", alto);
 
@@ -347,6 +371,7 @@
         background-color: rgb(224, 174, 138);
         border-radius: 15px;
         padding: 7px 10px;
+        font-size: 12px;
     }
     #coordenadasPuntoEscogido{
         border: 2px solid cadetblue;
@@ -456,6 +481,13 @@
     .despliegueV-enter-active{
         transition: transform 0.9s;
         overflow-x: hidden;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .mensajePuntoEscogido{
+            font-size: 17px;
+        }
+        
     }
 
 </style>

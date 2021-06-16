@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
-    <link rel="stylesheet" href="numerosColores.css">
-    <link rel="stylesheet" href="figuras.css">
+    <link rel="stylesheet" href="estilosGenerales.css">
     <title>Porcentajes</title>
 </head>
 
@@ -16,14 +15,21 @@
     <div id="doc">
 
         <p>Para hablar de una parte de un número suele ser útil imaginar
-            que se separa en 100 trozos. Cada trozo es llamado un <span class="resaltadoHorizontal"
-                style="background-color: cadetblue;">por ciento</span>. Se representa cada <span
-                class="resaltadoHorizontal" style="background-color: cadetblue;">por ciento</span> con el símbolo <span
-                class="resaltadoHorizontal" style="background-color: cadetblue;">%</span>.
+            que se separa en 100 trozos. Cada trozo es llamado un <span class="resaltado"
+                style="background-color: cadetblue;">por ciento</span>.
         </p>
 
-        <p>En el siguiente ejemplo puedes seleccionar un número y verlo separado en 100 por ciento.
+        <div class="nota">
+            <img src="bombillo.png" alt="Idea" class="iconoTexto">
+            Se representa cada <span
+            class="resaltado" style="background-color: cadetblue;">por ciento</span> con el símbolo <span
+            class="resaltado" style="background-color: cadetblue;">%</span>.
+        </div>
+
+        <p>En el siguiente cuadro puedes seleccionar un número y verlo separado en 100 por ciento.
         </p>
+
+        <div class="cuadroEjemplo">
             <input type="range" min="5" max="300" step="5" value="30" id="selectorNumero1" v-model="numero1">
             <p>{{numero1}}</p>
             <div id="contenedorNumero1">
@@ -45,7 +51,7 @@
             </div>
 
             <p v-show="mostrandoPorcentajesNumero1">Estás viendo {{porcientosSeleccionadosNumero1}} <span
-                    class="resaltadoHorizontal" style="background-color: cadetblue;">%</span>
+                    class="resaltado" style="background-color: cadetblue;">%</span>
                 de {{numero1}}
             </p>
 
@@ -54,6 +60,7 @@
             <br>
             <button id="bRomperNumero1" v-show="!mostrandoPorcentajesNumero1"
                 v-on:click="mostrarPorcentajesNumero1()">¡Imaginar que este número se divide en 100 porciones!</button>
+        </div>
     </div>
 </body>
 
