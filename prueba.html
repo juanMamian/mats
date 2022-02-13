@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script src="./resources/components/recuadro.js"></script>
+    <script src="./resources/components/bloque.js"></script>
+    <script src="./resources/components/enlace.js"></script>
+    <link rel="stylesheet" href="./resources/estilos/estilosGenerales.css">
+    <link rel="stylesheet" href="./resources/components/recuadroEstilo.css">
+    <link rel="stylesheet" href="./resources/components/bloqueEstilo.css">
+    <link rel="stylesheet" href="./resources/components/enlaceEstilo.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
+
+    <title>Nombre</title>
+</head>
+<body>
+    <div id="doc">
+        Introduccion
+        <recuadro-component texto="Antes sabiamos que 1+1 es 2" tipo="datoPrevio" ></recuadro-component>
+
+        Despues de todo lo que hemos hablado acerca de los <span class="resaltado">conjuntos</span> entonces hemos aprendido que...
+        <recuadro-component texto="Ahora sabemos que 2+2 es 4" tipo="datoNuevo" ></recuadro-component>
+
+        <bloque-component textocabecera="Plano cartesiano: Ubica en un plano los puntos para que veas como salen los números esos" textoboton="Intentar" tipo="evaluacion">
+            <div id="plano"></div>
+        </bloque-component>
+
+        <bloque-component textocabecera="Respuestas de conmutación" tipo="spoiler">
+            La multiplicacion es conmutativa
+        </bloque-component>
+
+        <enlace-component texto="Video de explicación" direccion="https://youtube.com"></enlace-component>
+    </div>
+</body>
+</html>
+
+<script>
+    const doc=new Vue({
+        el:"#doc",
+        components:{
+            recuadroComponent,
+            bloqueComponent,
+            enlaceComponent
+        },
+        data(){
+            return {
+
+            }
+        }
+    })
+</script>
+
+<style>
+  #plano{
+      width: 200px;
+      height: 200px;
+      background-color: red;
+  }
+</style>
