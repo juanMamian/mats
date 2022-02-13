@@ -1,8 +1,7 @@
 const recuadroComponent={
     
     props:{
-        tipo:String,
-        texto:String,
+        tipo:String,        
     },
     computed:{
         datoPrevio(){
@@ -12,5 +11,5 @@ const recuadroComponent={
             return this.tipo==='datoNuevo'
         }
     },
-    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo}"> <img class="iconoRecuadro" src="./resources/iconos/bombillo.png" /> <div class="textoRecuadro"> {{texto}} </div> </div>',    
+    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo}"> <img class="iconoRecuadro" src="./resources/iconos/bombillo.png" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
 }
