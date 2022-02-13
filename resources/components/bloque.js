@@ -30,21 +30,21 @@ const bloqueComponent={
         },
         iconoSrc(){
             if(this.ejemplo){
-                return "./resources/iconos/iconoEjemplo.svg"
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoEjemplo.svg"
             }
             else if(this.herramientaInteractiva){
-                return "./resources/iconos/iconoHerramientaInteractiva.svg"
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoHerramientaInteractiva.svg"
             }
             else if(this.cuento){
-                return "./resources/iconos/iconoCuento.svg"
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoCuento.svg"
             }
             else if(this.spoiler){
-                return "./resources/iconos/iconoSpoiler.svg"
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoSpoiler.svg"
             }
             else if(this.evaluacion){
-                return "./resources/iconos/iconoEvaluacion.svg"
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoEvaluacion.svg"
             }
-            return "./resources/iconos/puzzlePiece.svg"
+            return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/puzzlePiece.svg"
         },
         textoCerrarBoton(){
             if(this.textoboton==='Iniciar' || this.textoboton==='Intentar'){

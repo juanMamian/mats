@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
-    <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/bloque.js"></script>
+    <script src="../resources/components/bloque.js"></script>
+    <script src="../resources/components/recuadro.js"></script>
     <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/enlace.js"></script>
-    <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/recuadro.js"></script>
 
     <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/estilos/estilosGenerales.css">
     <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/recuadroEstilo.css">
@@ -23,9 +23,21 @@
 </head>
 <body>
     <div id="doc">
-        <recuadro tipo="datoViejo" texto="El área representa el tamaño de una figura geométrica">
-            
-        </recuadro>
+
+        El concepto de área es útil para comparar el tamaño de dos figuras.        
+
+        <bloque-component tipo="ejemplo" textoCabecera="En el siguiente cuadro se compara el tamaño de dos figuras">
+            <div id="figura1"></div>
+
+            <div id="figura2"></div>
+        </bloque-component>
+
+        <recuadro-component tipo="datoPrevio" >
+            El área representa el tamaño de una superficie.
+        </recuadro-component>
+
+
+
        
     </div>
 </body>
@@ -48,5 +60,15 @@
 </script>
 
 <style>
- 
+ #figura1{
+     width: 50px;
+     height: 50px;
+     background-color: green;
+ }
+
+ #figura2{
+     width: 100px;
+     height: 100px;
+     background-color: yellow;
+ }
 </style>
