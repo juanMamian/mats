@@ -13,8 +13,8 @@ const recuadroComponent={
         descubrimiento(){
             return this.tipo==='descubrimiento'
         },
-        instruccionClick(){
-            return this.tipo==='instruccionClick'
+        instruccionPointer(){
+            return this.tipo==='instruccionPointer'
         },
         instruccionTeclado(){
             return this.tipo==='instruccionTeclado'
@@ -23,7 +23,7 @@ const recuadroComponent={
             if(this.descubrimiento){
                 return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/circle-exclamation-solid.svg";
             }
-            else if(this.instruccionClick){
+            else if(this.instruccionPointer){
                 return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoInstruccionPointer.svg";
             }
             else if(this.instruccionTeclado){

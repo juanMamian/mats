@@ -17,6 +17,14 @@
     background-color: var(--paletaActual);
     color: whitesmoke;
 }
+.recuadro.instruccionPointer{
+    background-color: var(--paletaActual);
+    color: whitesmoke;
+}
+.recuadro.instruccionTeclado{
+    background-color: var(--paletaActual);
+    color: whitesmoke;
+}
 
 .iconoRecuadro{
     height: 30px;
