@@ -13,6 +13,10 @@
     background-color: var(--paletaActual);
     color: whitesmoke;
 }
+.recuadro.descubrimiento{
+    background-color: var(--paletaActual);
+    color: whitesmoke;
+}
 
 .iconoRecuadro{
     height: 30px;

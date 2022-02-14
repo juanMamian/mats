@@ -11,15 +11,27 @@ const recuadroComponent={
             return this.tipo==='datoNuevo'
         },
         descubrimiento(){
-            return this.tipo==='datoNuevo'
+            return this.tipo==='descubrimiento'
+        },
+        instruccionClick(){
+            return this.tipo==='instruccionClick'
+        },
+        instruccionTeclado(){
+            return this.tipo==='instruccionTeclado'
         },
         srcIcono(){
             if(this.descubrimiento){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoDescubrimiento.svg";
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/circle-exclamation-solid.svg";
+            }
+            else if(this.instruccionClick){
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoInstruccionPointer.svg";
+            }
+            else if(this.instruccionTeclado){
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoInstruccionTeclado.svg";
             }
             return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/bombillo.png";
 
         }
     },
-    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo}"> <img class="iconoRecuadro" :src="srcIcono" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
+    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo, descubrimiento, instruccionClick, instruccionTeclado}"> <img class="iconoRecuadro" :src="srcIcono" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
 }

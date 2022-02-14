@@ -24,12 +24,27 @@
 <body>
     <div id="doc">
 
-        El concepto de área es útil para comparar el tamaño de dos figuras.        
+        Para comparar el tamaño de dos figuras planas,        
 
-        <bloque-component tipo="ejemplo" textoCabecera="En el siguiente cuadro se compara el tamaño de dos figuras">
-            <div id="figura1"></div>
+        <bloque-component tipo="herramientaInteractiva" textoCabecera="En el siguiente cuadro se compara el tamaño de dos figuras">
+            Observa estas dos figuras:
+            
+            <div id="figura1" class="figura"></div>
 
-            <div id="figura2"></div>
+            <div id="figura2" class="figura"></div>
+            
+            El cuadro amarillo es más grande que el cuadro verde.
+            <br>
+            <br>
+
+            ¿Cuántos cuadro verdes se necesitan para igualar el tamaño del cuadro amarillo?
+
+            <div id="opcionRespuesta">¿{{cuadrosVerdes}}?</div>
+            <div class="boton">
+                ¡Intentemos!
+            </div>
+
+            <recuadro-component tipo="descubrimiento">La figura 2 es igual de grande que 4 figuras 1</recuadro-component>
         </bloque-component>
 
         <recuadro-component tipo="datoPrevio" >
@@ -53,7 +68,7 @@
         },
         data(){
             return {
-
+                cuadrosVerdes:1
             }
         }
     })
@@ -70,5 +85,9 @@
      width: 100px;
      height: 100px;
      background-color: yellow;
+ }
+
+ .figura{
+     margin: 10px auto;
  }
 </style>
