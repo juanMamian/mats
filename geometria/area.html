@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +12,10 @@
     <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/enlace.js"></script>
 
     <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/estilos/estilosGenerales.css">
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/recuadroEstilo.css">
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/bloqueEstilo.css">
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/enlaceEstilo.css">
+    <link rel="stylesheet"
+        href="../resources/components/recuadroEstilo.css">
+    <link rel="stylesheet" href="../resources/components/bloqueEstilo.css">
+    <link rel="stylesheet" href="../resources/components/enlaceEstilo.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,70 +23,183 @@
 
     <title>Area</title>
 </head>
+
 <body>
     <div id="doc">
 
-        Para comparar el tamaño de dos figuras planas,        
+        El concepto de área es útil cuando se quiere comparar el tamaño de dos figuras.
 
-        <bloque-component tipo="herramientaInteractiva" textoCabecera="En el siguiente cuadro se compara el tamaño de dos figuras">
+        <bloque-component @plegado="reiniciarFiguras" tipo="herramientaInteractiva"
+            textoCabecera="En el siguiente cuadro se compara el tamaño de dos figuras">
             Observa estas dos figuras:
+
+            <div id="contenedorFiguras" ref="contenedorFiguras">
+                <div id="figura1" @click="cuadrosVerdesComparados++" ref="figura1" class="figura"></div>
+                <div class="cuadritoVerde"
+                    :style="[offsetCuadritosVerdes[num-1], {visibility:num <= cuadrosVerdesComparados?'visible':'hidden'}]"
+                    ref="cuadritosVerdes" v-for="num of 4" :key="'cuadro'+num"></div>
+                <div id="figura2" ref="figura2" class="figura"></div>
+            </div>
+            <p v-show="fase===0">
+                El cuadro amarillo es más grande que el cuadro verde.
+            </p>
+            <p v-show="fase===0">
+            Pero... ¿Cuántos cuadros verdes se necesitan para igualar el tamaño del cuadro amarillo?
+            </p>
+
+            <recuadro-component v-show="fase===0" tipo="instruccionPointer">Presiona en el cuadro verde para probar
+            </recuadro-component>
+
+            <recuadro-component v-show="fase===1" tipo="descubrimiento">El cuadro amarillo es igual de grande que 4 cuadros verdes
+            </recuadro-component>
+
+            <p v-show="fase>0">
+            Esta conclusión también se puede expresar usando la palabra área:
+            </p>
+
+            <div v-show="fase===1" @click="fase++" class="boton">!Mostrar cómo!</div>
             
-            <div id="figura1" class="figura"></div>
-
-            <div id="figura2" class="figura"></div>
-            
-            El cuadro amarillo es más grande que el cuadro verde.
-            <br>
-            <br>
-
-            ¿Cuántos cuadro verdes se necesitan para igualar el tamaño del cuadro amarillo?
-
-            <recuadro-component tipo="instruccionPointer">Presiona en el cuadro verde para probar</recuadro-component>
-
-            <recuadro-component tipo="descubrimiento">La figura 2 es igual de grande que 4 figuras 1</recuadro-component>
+            <recuadro-component v-show="fase>1" tipo="descubrimiento">El área del cuadro amarillo es: 4 cuadros verdes
+            </recuadro-component>
         </bloque-component>
 
-        <recuadro-component tipo="datoPrevio" >
+        <recuadro-component tipo="datoPrevio">
             El área representa el tamaño de una superficie.
         </recuadro-component>
 
 
 
-       
+
     </div>
 </body>
+
 </html>
 
 <script>
-    const doc=new Vue({
-        el:"#doc",
-        components:{
+    const doc = new Vue({
+        el: "#doc",
+        components: {
             recuadroComponent,
             bloqueComponent,
             enlaceComponent
         },
-        data(){
+        data() {
             return {
-                cuadrosVerdes:1
+                cuadrosVerdesComparados: 0,
+                fase: 0,
+                posCuadritosVerdes: [
+                    {
+                        x: 0,
+                        y: 0,
+                    },
+                    {
+                        x: 0,
+                        y: 0,
+                    },
+                    {
+                        x: 0,
+                        y: 0,
+                    },
+                    {
+                        x: 0,
+                        y: 0,
+                    }
+                ]
+            }
+        },
+        computed: {
+            offsetCuadritosVerdes() {
+                return this.posCuadritosVerdes.map(pos => {
+                    return {
+                        left: pos.x + 'px',
+                        top: pos.y + 'px'
+                    }
+                })
+            }
+        },
+        methods: {
+            reiniciarFiguras() {
+                this.cuadrosVerdesComparados = 0;
+                this.fase=0;
+            }
+        },
+        watch: {
+            cuadrosVerdesComparados(num) {
+                num = num - 1;
+                if (num < 0 || num >= 4) {
+                    return
+                }
+                const posicionCuadroVerde = this.$refs.figura1.getBoundingClientRect();
+                const posicionCuadroAmarillo = this.$refs.figura2.getBoundingClientRect();
+                const posicionContenedor = this.$refs.contenedorFiguras.getBoundingClientRect();
+
+                posicionInicial = {
+                    x: posicionCuadroVerde.left - posicionContenedor.left,
+                    y: posicionCuadroVerde.top - posicionContenedor.top,
+                }
+
+                const desplazamientoX = num === 1 || num === 3 ? 50 : 0;
+                const desplazamientoY = num > 1 ? 50 : 0;
+
+                posicionFinal = {
+                    x: posicionCuadroAmarillo.left + desplazamientoX - posicionContenedor.left,
+                    y: posicionCuadroAmarillo.top + desplazamientoY - posicionContenedor.top,
+                }
+
+                this.$set(this.posCuadritosVerdes, num, { x: posicionInicial.x, y: posicionInicial.y });
+
+                this.$refs.cuadritosVerdes[num].animate([
+                    {
+                        top: posicionInicial.y + 'px',
+                        left: posicionInicial.x + 'px',
+                    },
+                    {
+                        top: posicionFinal.y + 'px',
+                        left: posicionFinal.x + 'px',
+                    }
+                ],
+                    {
+                        duration: 1000,
+                        iterations: 1
+                    }
+                );
+                this.$set(this.posCuadritosVerdes, num, { x: posicionFinal.x, y: posicionFinal.y });
+                if (num >= 3) {
+                    this.fase = 1;
+                }
             }
         }
     })
 </script>
 
 <style>
- #figura1{
-     width: 50px;
-     height: 50px;
-     background-color: green;
- }
+    #contenedorFiguras {
+        position: relative;
+    }
 
- #figura2{
-     width: 100px;
-     height: 100px;
-     background-color: yellow;
- }
+    #figura1 {
+        width: 50px;
+        height: 50px;
+        background-color: green;
+        z-index: 1;
+    }
 
- .figura{
-     margin: 10px auto;
- }
+    #figura2 {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+    }
+
+    .figura {
+        margin: 10px auto;
+    }
+
+    .cuadritoVerde {
+        z-index: 0;
+        width: 50px;
+        height: 50px;
+        border: 2px dotted green;
+        box-sizing: border-box;
+        position: absolute;
+    }
 </style>

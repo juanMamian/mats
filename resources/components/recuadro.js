@@ -24,7 +24,7 @@ const recuadroComponent={
                 return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/circle-exclamation-solid.svg";
             }
             else if(this.instruccionPointer){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoInstruccionPointer.svg";
+                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/handPointer.svg";
             }
             else if(this.instruccionTeclado){
                 return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoInstruccionTeclado.svg";
@@ -33,5 +33,5 @@ const recuadroComponent={
 
         }
     },
-    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo, descubrimiento, instruccionClick, instruccionTeclado}"> <img class="iconoRecuadro" :src="srcIcono" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
+    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo, descubrimiento, instruccionPointer, instruccionTeclado}"> <img class="iconoRecuadro" :src="srcIcono" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
 }
