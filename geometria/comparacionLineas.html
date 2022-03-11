@@ -19,23 +19,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
 
-    <title>Figura geométrica</title>
+    <title>Comparación de lineas</title>
 </head>
 <body>
     <div id="doc">   
-        <recuadro-component tipo="datoPrevio">
-            Las figuras geométricas son figuras imaginarias hechas de líneas rectas imaginarias, líneas curvas imaginarias y puntos imaginarios.    
-        </recuadro-component>
+        Las lineas imaginarias se comparan con la linea unitaria para expresar su tamaño.
 
-        <recuadro-component tipo="datoPrevio">
-            Las figuras geométricas sólo existen en la imaginación pero las podemos representar con un dibujo
-        </recuadro-component>
+        <bloque-component tipo="ejemplo" textoCabecera="En este cuadro se compara una linea imaginaria con la linea unitaria">
+            <div class="boton" @click="mostrandoLinea1=!mostrandoLinea1" :class="{deshabilitado: mostrandoLinea1 }">
+                Representar una linea imaginaria
+            </div>
 
-        <bloque-component tipo="ejemplo" textoCabecera="En este cuadro se pueden ver las representaciones de algunas figuras geométricas">
-            <img class="recursoImagen" src="figurasGeometricas.png" alt="Figuras">
+            <div id="zonaLinea1" class="zonaLinea">
+                <transition name="despliegueHorizontal">
+                    <div v-show="mostrandoLinea1" class="linea" id="linea1"></div>
+                </transition>
+            </div>
         </bloque-component>
-
-        
     </div>
 </body>
 </html>
@@ -50,6 +50,7 @@
         },
         data(){
             return {
+                mostrandoLinea1:false,
 
             }
         }
@@ -66,7 +67,26 @@
 
  .recursoImagen{
      max-width: 100%;
-     margin: 0px auto;
-     display: block;
+ }
+
+ .linea{
+     height: 5px;
+     background-color: black;
+ }
+
+ #linea1{
+     width: 100px;
+ }
+
+ .despliegueHorizontal-enter-active, .despliegueHorizontal-leave-active{
+     transition:  opacity 1s ease;
+ }
+
+ .despliegueHorizontal-enter-from, .despliegueHorizontal-leave-to{
+     opacity: 0;
+ }
+
+ .despliegueHorizontal-enter-to, .despliegueHorizontal-leave-from{
+     opacity: 1;
  }
 </style>
