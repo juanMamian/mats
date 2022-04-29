@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
+     
+    <script id="MathJax-script" async src="http://192.168.1.100:3000/public/resources/libraries/MathJax/mathjax.js"></script>
+
+    <link rel="stylesheet" href="figuras.css">
+    <link rel="stylesheet" href="numerosColores.css">
+    <link rel="stylesheet" href="animacionesVue.css">
+    <title>Propiedad conmutativa</title>
+</head>
+
+<body>
+
+    <div id="doc">
+        <p>En una expresión numérica, como esta:</p>
+
+        <ul>
+            <li>\(4+8\)</li>
+        </ul>
+
+        <p>
+            Si se intercambia de lugar los números, se obtiene la expresión:
+        </p>
+
+        <ul>
+            <li>\(8+4\)</li>
+        </ul>
+
+        <p>Donde los números aparecen intercambiados de lugar. Están <span class="resaltadoHorizontal"
+                style="background-color: cadetblue;">conmutados</span> .</p>
+
+        <p>Reescribir una expresión intercambiando de lugar los números es llamado <span class="resaltadoHorizontal"
+                style="background-color: cadetblue;">conmutar</span></p>
+
+        <p>En el siguiente cuadro puedes crear una expresión numérica y conmutarla.
+        </p>
+
+        <div id="ejemplo1" class="recuadro">
+            <p class="transversal instruccion">Escoje dos números:</p>
+
+            <input id="rangeNumero1" type="range" min="1" max="20" v-model="numero1">
+            <input id="rangeNumero2" type="range" min="1" max="20" v-model="numero2">
+
+            <div class="valorNumero">{{numero1}}</div>
+            <div class="valorNumero">{{numero2}}</div>
+
+            <div class="transversal instruccion">Escoje una operación</div>
+
+            <div id="contenedorOperaciones" class="transversal">
+                <div class="operacion" :class="{seleccionada:operacionEscogida==='suma'}"
+                    v-on:click="operacionEscogida='suma'">\(+\)</div>
+                <div class="operacion" :class="{seleccionada:operacionEscogida==='resta'}"
+                    v-on:click="operacionEscogida='resta'">\(-\)</div>
+                <div class="operacion" :class="{seleccionada:operacionEscogida==='multiplicación'}"
+                    v-on:click="operacionEscogida='multiplicación'">\( \times \)</div>
+                <div class="operacion" :class="{seleccionada:operacionEscogida==='división'}"
+                    v-on:click="operacionEscogida='división'">\( \div \)</div>
+
+            </div>
+
+            <button class="transversal" v-on:click="crearExpresiones">¡Escribir expresión!</button>
+
+            <transition name="caer">
+            <div v-show="expresionOriginalCreada" :key="'e1'+versionExpresion1" class="expresion transversal noConmutada"> <span
+                    > {{expresion1}}</span></div>
+            </transition>
+            <button v-show="expresionOriginalCreada" v-on:click="expresionConmutada=true" class="transversal"
+                :class="{deshabilitado:expresionConmutada}">¡Conmutar!</button>
+            <transition name="caer">
+                <div v-show="expresionConmutada==true" :key="'e2'+versionExpresion2"
+                    class="expresion conmutada transversal"> <span> {{expresion2}}</span>  </div>
+            </transition>
+        </div>        
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                numero1: 4,
+                numero2: 8,
+
+                stepEJemplo1: 0,
+                operacionEscogida: "suma",
+
+                versionExpresion1: 0,
+                versionExpresion2: 0,
+                
+                expresion1:null,
+                expresion2:null,
+
+                expresionOriginalCreada:false,
+
+                expresionConmutada: false,
+
+            }
+        },
+        methods:{
+            crearExpresiones() {
+                var exp = "";
+                if (this.operacionEscogida === "suma") {
+                    exp = this.numero1 + " + " + this.numero2;
+                }
+                else if (this.operacionEscogida === "multiplicación") {
+                    exp = this.numero1 + " \\times " + this.numero2;
+                }
+                else if (this.operacionEscogida === "resta") {
+                    exp = this.numero1 + " - " + this.numero2;
+                }
+                else if (this.operacionEscogida === "división") {
+                    exp = this.numero1 + " \\over " + this.numero2;
+                }
+                this.expresion1= "\\(" + exp + "\\)";
+                this.expresionOriginalCreada=true;
+
+                // expresion 2.
+
+                exp2 = "";
+                if (this.operacionEscogida === "suma") {
+                    exp2 = this.numero2 + " + " + this.numero1;
+                }
+                else if (this.operacionEscogida === "multiplicación") {
+                    exp2 = this.numero2 + " \\times " + this.numero1;
+                }
+                else if (this.operacionEscogida === "resta") {
+                    exp2 = this.numero2 + " - " + this.numero1;
+                }
+                else if (this.operacionEscogida === "división") {
+                    exp2 = this.numero2 + " \\over " + this.numero1;
+                }
+                this.expresion2= "\\(" + exp2 + "\\)";
+
+                this.expresionConmutada = false;
+
+                this.versionExpresion1++;
+                this.versionExpresion2++
+                
+                this.$nextTick(() => {
+                    MathJax.typeset();
+                })
+            },
+        },
+        watch:{
+            numero1(){
+                this.expresionOriginalCreada=false;
+                this.expresionConmutada=false;
+            },
+            numero2(){
+                this.expresionOriginalCreada=false;
+                this.expresionConmutada=false;
+            },
+            operacionEscogida(){
+                this.expresionOriginalCreada=false;
+                this.expresionConmutada=false;
+            }
+        }
+    })
+</script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    button {
+        padding: 10px;
+        margin: 10px 0px;
+    }
+
+    #ejemplo1 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-content: center;
+        justify-items: center;
+    }
+
+    .transversal {
+        grid-column: 1/3;
+    }
+
+    .instruccion{
+        padding: 5px 15px;
+        border: 1px solid cadetblue;
+        border-radius: 5px;
+    }
+    .expresion{
+        padding: 5px 15px;
+        background-color: cadetblue;
+        border-radius: 5px;
+    }
+    .operacion {
+        display: inline-block;
+        margin: 10px;
+        border: 1px solid gray;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 40px;
+        height: 30px;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    .operacion:hover {
+        background-color: cadetblue;
+    }
+
+    .seleccionada {
+        background-color: cadetblue;
+    }
+
+    .hoverRevelable {
+        border: 1px solid green;
+        border-radius: 5px;
+        padding: 5px;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    .hoverRevelable>.noHover {
+        display: inline-block;
+    }
+
+    .hoverRevelable>.onHover {
+        display: none;
+    }
+
+    .hoverRevelable:hover>.noHover {
+        display: none;
+    }
+
+    .hoverRevelable:hover>.onHover {
+        display: inline-block;
+    }
+</style>

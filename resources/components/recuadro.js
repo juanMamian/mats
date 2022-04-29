@@ -21,15 +21,15 @@ const recuadroComponent={
         },
         srcIcono(){
             if(this.descubrimiento){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/circle-exclamation-solid.svg";
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/circle-exclamation-solid.svg";
             }
             else if(this.instruccionPointer){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/handPointer.svg";
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/handPointer.svg";
             }
             else if(this.instruccionTeclado){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoInstruccionTeclado.svg";
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/iconoInstruccionTeclado.svg";
             }
-            return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/bombillo.png";
+            return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/bombillo.png";
 
         }
     },

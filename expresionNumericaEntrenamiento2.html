@@ -6,11 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
 
-    <link rel="stylesheet" href="estilosGenerales.css">
+    <script id="MathJax-script" async
+        src="http://192.168.1.100:3000/public/resources/libraries/MathJax/mathjax.js"></script>
+
+    <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/bloque.js"></script>
+    <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/enlace.js"></script>
+    <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/recuadro.js"></script>
+
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/estilos/estilosGenerales.css">
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/recuadroEstilo.css">
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/bloqueEstilo.css">
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/enlaceEstilo.css">
 
     <title>Entrenamiento expresión numérica parte 2</title>
 </head>
@@ -36,16 +44,16 @@
 
             <transition name="fadeIn">
                 <div v-show="esperandoRespuesta && estadoRespuesta!='correcta'">
-                    <div class="instruccion recuadro">
-                        <img src="bandera.png" alt="Objetivo" class="iconoTexto">
-                        ¡Descubre el valor de esta expresión numérica!
-                    </div>
+                    <recuadro-component tipo="instruccionTeclado">
+                        ¡Descubre el valor de esta expresión numérica!<br>
+                        
+                    </recuadro-component>
                     <br>
 
-                    <label for="respuestaUsuario">Introduce aquí tu respuesta</label><br>
                     <input type="number" v-show="expresionGenerada" v-model="respuestaUsuario"><br>
-                    <button @click="evaluarRespuesta(); versionRespuesta++"
-                        v-show="estadoRespuesta!='correcta'">Aceptar</button>
+                    <div class="boton" @click="evaluarRespuesta(); versionRespuesta++"
+                        v-show="estadoRespuesta!='correcta'">Aceptar</div>
+
 
                 </div>
             </transition>
@@ -77,6 +85,11 @@
 <script>
     const doc = new Vue({
         el: "#doc",
+        components: {
+            recuadroComponent,
+            bloqueComponent,
+            enlaceComponent
+        },
         data() {
             return {
                 numero1: null,
@@ -155,7 +168,7 @@
 
                 this.versionExpresionOriginal++;
                 this.esperandoRespuesta = false;
-                this.respuestaUsuario=null;
+                this.respuestaUsuario = null;
                 this.$nextTick(() => {
                     MathJax.typeset();
                 });
@@ -267,7 +280,7 @@
 
     }
 
-    #respuesta{
+    #respuesta {
         padding: 15px;
         border-radius: 50%;
         background-color: rgb(60, 187, 60);

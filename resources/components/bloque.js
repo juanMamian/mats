@@ -30,21 +30,21 @@ const bloqueComponent={
         },
         iconoSrc(){
             if(this.ejemplo){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoEjemplo.svg"
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/iconoEjemplo.svg"
             }
             else if(this.herramientaInteractiva){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoHerramientaInteractiva.svg"
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/iconoHerramientaInteractiva.svg"
             }
             else if(this.cuento){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoCuento.svg"
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/iconoCuento.svg"
             }
             else if(this.spoiler){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoSpoiler.svg"
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/iconoSpoiler.svg"
             }
             else if(this.evaluacion){
-                return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/iconoEvaluacion.svg"
+                return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/iconoEvaluacion.svg"
             }
-            return "https://gitcdn.link/cdn/juanMamian/mats/master/resources/iconos/puzzlePiece.svg"
+            return "http://192.168.1.100:3000/public/atlasConocimiento/iconos/puzzlePiece.svg"
         },
         textoCerrarBoton(){
             if(this.textoboton==='Iniciar' || this.textoboton==='Intentar'){

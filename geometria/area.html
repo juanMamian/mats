@@ -5,70 +5,121 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
 
-    <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/bloque.js"></script>
-    <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/recuadro.js"></script>
-    <script src="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/enlace.js"></script>
+    <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/bloque.js"></script>
+    <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/enlace.js"></script>
+    <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/recuadro.js"></script>
 
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/estilos/estilosGenerales.css">
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/recuadroEstilo.css">
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/bloqueEstilo.css">
-    <link rel="stylesheet" href="https://gitcdn.link/cdn/juanMamian/mats/master/resources/components/enlaceEstilo.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/estilos/estilosGenerales.css">
+    <link rel="stylesheet"
+        href="http://192.168.1.100:3000/public/atlasConocimiento/components/recuadroEstilo.css">
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/bloqueEstilo.css">
+    <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/enlaceEstilo.css">
 
     <title>Area</title>
 </head>
 
 <body>
     <div id="doc">
+        Las figuras geometricas se pueden comparar con el cuadro unitario para expresar su tamaño.
 
-        El concepto de área es útil cuando se quiere comparar el tamaño de dos figuras geométricas planas.
+        <bloque-component tipo="ejemplo"
+            textoCabecera="En este cuadro se comparan algunas figuras geométricas con el cuadro unitario"
+            @plegado="cantidadUnitarias1=0; cantidadUnitarias2=0">
 
-        <bloque-component @plegado="reiniciarFiguras" tipo="herramientaInteractiva"
-            textoCabecera="En el siguiente cuadro se compara el tamaño de dos figuras">
-            Observa estas dos figuras:
+            <div class="itemEjemplo">
+                <div id="zonaFigura1" class="zonaFigura zonaFiguraEjemplo1">
+                    <transition name="despliegueHorizontal" appear>
+                        <div class="figura figura1 figuraLlenable">
+                            <transition-group name="floatup" tag="div" style="display: flex; flex-wrap: wrap;">
+                                <div class="figura cuadroUnitario" v-for="numero of cantidadUnitarias1"
+                                    :key="'cuadroUnitario'+numero">
+                                </div>
+                            </transition-group>
+                        </div>
+                    </transition>
+                </div>                
 
-            <div id="contenedorFiguras" ref="contenedorFiguras">
-                <div id="figura1" @click="cuadrosVerdesComparados++" ref="figura1" class="figura"></div>
-                <div class="cuadritoVerde"
-                    :style="[offsetCuadritosVerdes[num-1], {visibility:num <= cuadrosVerdesComparados?'visible':'hidden'}]"
-                    ref="cuadritosVerdes" v-for="num of 4" :key="'cuadro'+num"></div>
-                <div id="figura2" ref="figura2" class="figura"></div>
+                <div class="botonComparacion boton" id="botonComparacion1" @click="increaseCantidadUnitarias1"
+                    v-show="cantidadUnitarias1<3">
+                    Comparar con {{cantidadUnitarias1+1}} {{cantidadUnitarias1!=0?'cuadros unitarios':'cuadro unitario'}}
+                </div>
+
+                <recuadro-component tipo="descubrimiento" v-show="cantidadUnitarias1===3">
+                    ¡La figura es igual de grande que 3 cuadros unitarios!
+                </recuadro-component>
             </div>
-            <p v-show="fase===0">
-                El cuadro amarillo es más grande que el cuadro verde.
-            </p>
-            <p v-show="fase===0">
-            Pero... ¿Cuántos cuadros verdes se necesitan para igualar el tamaño del cuadro amarillo?
-            </p>
 
-            <recuadro-component v-show="fase===0" tipo="instruccionPointer">Presiona en el cuadro verde para probar
-            </recuadro-component>
+            <div class="itemEjemplo">
+                <div id="zonaFigura2" class="zonaFigura zonaFiguraEjemplo2">
+                    <transition name="despliegueHorizontal" appear>
+                        <div class="figura figura2 figuraLlenable">
+                            <transition-group name="floatup" tag="div" style="display: flex; flex-wrap: wrap;">
+                                <div class="figura cuadroUnitario" v-for="numero of cantidadUnitarias2"
+                                    :key="'cuadroUnitario'+numero">
+                                </div>
+                            </transition-group>
+                        </div>
+                    </transition>
+                </div>                
 
-            <recuadro-component v-show="fase===1" tipo="descubrimiento">El cuadro amarillo es igual de grande que 4 cuadros verdes
-            </recuadro-component>
+                <div class="botonComparacion boton" id="botonComparacion2" @click="increaseCantidadUnitarias2"
+                    v-show="cantidadUnitarias2<12">
+                    Comparar con {{cantidadUnitarias2+1}} {{cantidadUnitarias2!=0?'cuadros unitarios':'cuadro unitario'}}
+                </div>
 
-            <p v-show="fase>0">
-            Esta conclusión también se puede expresar usando la palabra área:
-            </p>
+                <recuadro-component tipo="descubrimiento" v-show="cantidadUnitarias2===12">
+                    ¡La figura es igual de grande que 12 cuadros unitarios!
+                </recuadro-component>
+            </div>
 
-            <div v-show="fase===1" @click="fase++" class="boton">!Mostrar cómo!</div>
-            
-            <recuadro-component v-show="fase>1" tipo="descubrimiento">El área del cuadro amarillo es: 4 cuadros verdes
-            </recuadro-component>
         </bloque-component>
 
+
+
+        Para expresar la comparación de una figura geométrica con el cuadro unitario se usa el concepto de área.
+
         <recuadro-component tipo="datoPrevio">
-            El área representa el tamaño de una figura al compararla con otra.
+            Área de una figura geométrica significa: cantidad de cuadros unitarios que son iguales a ella.
         </recuadro-component>
 
+        <bloque-component tipo="ejemplo"
+            textoCabecera="En este cuadro se expresan comparaciones de figuras geométricas con el cuadro unitario">
+            <div class="itemEjemplo">
+                <div class=" figura figura1"></div>
+                <transition name="slideLeft" mode="out-in">
+                    <recuadro-component class="expresionLongitud" tipo="datoPrevio" v-show="!comparacion1Area">
+                        Esta figura geométrica es igual de grande que 3 cuadros unitarios.
+                    </recuadro-component>
+                </transition>
+                <transition name="slideLeft" mode="out-in">
+                    <recuadro-component class="expresionLongitud" tipo="datoNuevo" v-show="comparacion1Area">
+                        El área de esta figura es 3.
+                    </recuadro-component>
+                </transition>
+                <div class="boton" @click="comparacion1Area=!comparacion1Area">
+                    Expresar la comparación {{comparacion1Area?'normalmente':'en terminos de área'}}
+                </div>
+            </div>
 
-
-
+            <div class="itemEjemplo">
+                <div class="figura figura2"></div>
+                <transition name="slideLeft" mode="out-in">
+                    <recuadro-component class="expresionLongitud" tipo="datoPrevio" v-show="!comparacion2Area">
+                        Esta figura geométrica es igual de grande que 12 cuadros unitarios.
+                    </recuadro-component>
+                </transition>
+                <transition name="slideLeft" mode="out-in">
+                    <recuadro-component class="expresionLongitud" tipo="datoNuevo" v-show="comparacion2Area">
+                        El área de esta figura geométrica es 12.
+                    </recuadro-component>
+                </transition>
+                <div class="boton" @click="comparacion2Area=!comparacion2Area">
+                    Expresar la comparación {{comparacion2Area?'normalmente':'en terminos de área'}}
+                </div>
+            </div>
+        </bloque-component>
     </div>
 </body>
 
@@ -84,121 +135,169 @@
         },
         data() {
             return {
-                cuadrosVerdesComparados: 0,
-                fase: 0,
-                posCuadritosVerdes: [
-                    {
-                        x: 0,
-                        y: 0,
-                    },
-                    {
-                        x: 0,
-                        y: 0,
-                    },
-                    {
-                        x: 0,
-                        y: 0,
-                    },
-                    {
-                        x: 0,
-                        y: 0,
-                    }
-                ]
-            }
-        },
-        computed: {
-            offsetCuadritosVerdes() {
-                return this.posCuadritosVerdes.map(pos => {
-                    return {
-                        left: pos.x + 'px',
-                        top: pos.y + 'px'
-                    }
-                })
+                mostrandoLinea1: false,
+                cantidadUnitarias1: 0,
+                cantidadUnitarias2: 0,
+                comparacion1Area: false,
+                comparacion2Area: false,
             }
         },
         methods: {
-            reiniciarFiguras() {
-                this.cuadrosVerdesComparados = 0;
-                this.fase=0;
-            }
-        },
-        watch: {
-            cuadrosVerdesComparados(num) {
-                num = num - 1;
-                if (num < 0 || num >= 4) {
-                    return
+            increaseCantidadUnitarias1() {
+                if (this.cantidadUnitarias1 >= 3) {
+                    this.cantidadUnitarias1 = 3;
                 }
-                const posicionCuadroVerde = this.$refs.figura1.getBoundingClientRect();
-                const posicionCuadroAmarillo = this.$refs.figura2.getBoundingClientRect();
-                const posicionContenedor = this.$refs.contenedorFiguras.getBoundingClientRect();
-
-                posicionInicial = {
-                    x: posicionCuadroVerde.left - posicionContenedor.left,
-                    y: posicionCuadroVerde.top - posicionContenedor.top,
+                else {
+                    this.cantidadUnitarias1++;
                 }
 
-                const desplazamientoX = num === 1 || num === 3 ? 50 : 0;
-                const desplazamientoY = num > 1 ? 50 : 0;
 
-                posicionFinal = {
-                    x: posicionCuadroAmarillo.left + desplazamientoX - posicionContenedor.left,
-                    y: posicionCuadroAmarillo.top + desplazamientoY - posicionContenedor.top,
+            },
+            increaseCantidadUnitarias2() {
+                if (this.cantidadUnitarias2 >= 12) {
+                    this.cantidadUnitarias2 = 12;
+                }
+                else {
+                    this.cantidadUnitarias2++;
                 }
 
-                this.$set(this.posCuadritosVerdes, num, { x: posicionInicial.x, y: posicionInicial.y });
 
-                this.$refs.cuadritosVerdes[num].animate([
-                    {
-                        top: posicionInicial.y + 'px',
-                        left: posicionInicial.x + 'px',
-                    },
-                    {
-                        top: posicionFinal.y + 'px',
-                        left: posicionFinal.x + 'px',
-                    }
-                ],
-                    {
-                        duration: 1000,
-                        iterations: 1
-                    }
-                );
-                this.$set(this.posCuadritosVerdes, num, { x: posicionFinal.x, y: posicionFinal.y });
-                if (num >= 3) {
-                    this.fase = 1;
-                }
             }
         }
     })
 </script>
 
 <style>
-    #contenedorFiguras {
-        position: relative;
-    }
-
-    #figura1 {
+    #lineaUnitaria {
+        margin: 10px auto;
         width: 50px;
-        height: 50px;
-        background-color: green;
-        z-index: 1;
+        height: 5px;
+        background-color: black;
     }
 
-    #figura2 {
-        width: 100px;
-        height: 100px;
-        background-color: yellow;
+    .recursoImagen {
+        max-width: 100%;
     }
 
-    .figura {
+    .figura{
+        border: 2px solid black;
+        box-sizing: content-box;        
+    }    
+
+    .figura:not(.cuadroUnitario){
         margin: 10px auto;
     }
-
-    .cuadritoVerde {
-        z-index: 0;
+    .cuadroUnitario {
         width: 50px;
         height: 50px;
-        border: 2px dotted green;
+        border: 2px solid red;
+        position: relative;
         box-sizing: border-box;
-        position: absolute;
+    }
+
+    .zonaFigura {
+        margin: 10px auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .figura1 {
+        width: 150px;
+        height: 50px;
+        margin-top: 20px;
+    }    
+
+
+    .figura2 {
+        width: 200px;
+        height: 150px;
+        margin-top: 20px;
+    }   
+
+    .expresionLongitud {
+        position: relative;
+        justify-content: center;
+    }
+
+    #botonComparacion1 {
+        margin: 50px auto;
+    }
+
+    .ejemploLongitud {
+        border: 3px dotted gray;
+        border-spacing: 10px;
+        padding: 5%;
+    }
+
+    .itemEjemplo {
+        border: 3px dotted gray;
+        border-spacing: 10px;
+        padding: 5%;
+        margin: 10px 0px;
+    }
+
+    
+
+    
+
+    .despliegueHorizontal-enter-active,
+    .despliegueHorizontal-leave-active {
+        transition: opacity 1s ease;
+    }
+
+    .despliegueHorizontal-enter-from,
+    .despliegueHorizontal-leave-to {
+        opacity: 0;
+    }
+
+    .despliegueHorizontal-enter-to,
+    .despliegueHorizontal-leave-from {
+        opacity: 1;
+    }
+
+    .floatup-enter-active {
+        animation: subir 0.3s linear;
+    }
+
+    .slideLeft-enter-active {
+        animation: slideInLeft 0.3s;
+    }
+
+    /* .slideLeft-leave-active {
+        animation: slideOutLeft 0.3s;
+    } */
+
+    @keyframes slideInLeft {
+        0% {
+            transform: translateX(30px);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateX(0px);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutLeft {
+        0% {
+            left: 0px;
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(-30px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes subir {
+        0% {
+            top: 20px;
+        }
+
+        100% {
+            top: 0px;
+        }
     }
 </style>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     
+    <script id="MathJax-script" async src="http://192.168.1.100:3000/public/resources/libraries/MathJax/mathjax.js"></script>
+    <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
+
+    <link rel="stylesheet" href="animacionesVue.css">
+    <title>Ejemplos de despeje</title>
+</head>
+<body>
+    <div id="doc">
+        <div class="ejemplo">
+            <div class="tituloEjemplo">
+                Ejemplo 1
+            </div>
+            <div class="ecuacion ecuacionOriginal">
+                \( (m \cdot 3) -2 = {7 \over 2 } + 5 \)
+            </div>
+
+            <div class="informacion">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                En el miembro de la izquierda, la última operación aplicada es la 
+                <span class="subrayado">resta de dos</span>.
+                Para cancelarla, se construirá una ecuación equivalente aplicando su operación
+                contraria en los miembros de la ecuación.
+            </div>
+<br>            
+            <button class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=1">
+                Construir una ecuación equivalente aplicando una <span class="subrayado">suma de 2</span> en
+                los miembros de la ecuación.
+            </button>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=1" v-show="stepEjemplo1>=1">
+                \( ((m \cdot 3) -2)+2 = ({{7 \over 2 } + 5})+2 \)
+            </div>
+
+            <div class="informacion" v-show="stepEjemplo1>=1">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                Ahora, en el miembro de la izquierda, hay operaciones opuestas consecutivas.
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=1" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=2">
+                    Cancelar las operaciones opuestas consecutivas
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=2">
+                \( m \cdot 3 = ({{7 \over 2 } + 5})+2 \)
+            </div>
+
+            <div class="informacion" v-show="stepEjemplo1>=2">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                En el miembro de la izquierda la última (Y única) operación aplicada
+                es la <span class="subrayado">multiplicación por 3</span>. Para cancelarla
+                se construirá una ecuación equivalente aplicando su operación contraria en los
+                miembros de la ecuación.
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=2" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=3">
+                    Construir una ecuación equivalente aplicando una <span class="subrayado">división entre 3</span> en
+                    los miembros de la ecuación.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=3">
+                \( {{m \cdot 3} \over 3 }= {{({({{7 \over 2 } + 5})+2})} \over 3 } \)
+
+            </div>
+
+            <div class="informacion" v-show="stepEjemplo1>=3">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                En esta ecuación hay operaciones opuestas consecutivas.
+            </div>
+
+            
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo1>=3" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo1=4">
+                    Cancelar operaciones opuestas consecutivas.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo1>=4">
+                \( m = {{({({{7 \over 2 } + 5})+2})} \over 3 } \)
+
+            </div>
+
+            <div class="conclusion" v-show="stepEjemplo1>=4">
+                <img src="conclusion.png" alt="Conclusion" style="width: 25px;">
+                La \(m\) está despejada.
+            </div>           
+
+        </div>
+
+        <!--  -->
+
+        <div class="ejemplo">
+            <div class="tituloEjemplo">
+                Ejemplo 2
+            </div>
+            <div class="ecuacion ecuacionOriginal">
+                \( {{(p - 8 )} \over 2 }= 8 \)
+            </div>
+
+            <div class="informacion">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                En el miembro de la izquierda, la última operación aplicada es la 
+                <span class="subrayado">división entre 2</span>.
+                Para cancelarla, se construirá una ecuación equivalente aplicando su operación
+                contraria en los miembros de la ecuación.
+            </div>
+<br>            
+            <button class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=1">
+                Construir una ecuación equivalente aplicando una <span class="subrayado">multiplicación por 2</span> en
+                los miembros de la ecuación.
+            </button>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=1" v-show="stepEjemplo2>=1">
+                \( ({{(p - 8 )} \over 2 }) \cdot 2 = 8 \cdot 2 \)
+            </div>
+
+            <div class="informacion" v-show="stepEjemplo2>=1">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                Ahora, en el miembro de la izquierda, hay operaciones opuestas consecutivas.
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=1" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=2">
+                    Cancelar las operaciones opuestas consecutivas
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=2">
+                \( p-8  = 8 \cdot 2 \)
+            </div>
+
+            <div class="informacion" v-show="stepEjemplo2>=2">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                En el miembro de la izquierda la última (Y única) operación aplicada
+                es la <span class="subrayado">resta de 8</span>. Para cancelarla
+                se construirá una ecuación equivalente aplicando su operación contraria en los
+                miembros de la ecuación.
+            </div>
+
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=2" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=3">
+                    Construir una ecuación equivalente aplicando una <span class="subrayado">suma de 8</span> en
+                    los miembros de la ecuación.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=3">
+                \( (p-8) + 8  = (8 \cdot 2) + 8 \)                
+            </div>
+
+            <div class="informacion" v-show="stepEjemplo2>=3">
+                <img src="alerta.png" alt="Alerta" style="width: 25px;">
+                En esta ecuación hay operaciones opuestas consecutivas.
+            </div>
+
+            
+            <transition name="fadeLimpio">
+                <button v-show="stepEjemplo2>=3" class="botonEjemplo botonEjemplo1" v-on:click="stepEjemplo2=4">
+                    Cancelar operaciones opuestas consecutivas.
+                </button>
+            </transition>
+
+            <div class="ecuacion" v-show="stepEjemplo2>=4">
+                \( p = (8 \cdot 2) + 8 \)                                
+            </div>
+
+            <div class="conclusion" v-show="stepEjemplo2>=4">
+                <img src="conclusion.png" alt="Conclusion" style="width: 25px;">
+                La \(p\) está despejada.
+            </div>           
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    const doc = new Vue({
+        el: "#doc",
+        data() {
+            return {
+                stepEjemplo1: 0,
+                stepEjemplo2: 0,
+
+            }
+        }
+    })
+</script>
+
+<style>
+
+    body{
+        padding: 2% 5%;
+    }
+
+
+
+    .ejemplo {
+        padding: 20px 20px;
+        border: 2px solid cadetblue;
+        border-radius: 10px;
+        margin: 20px 0px;
+    }
+
+    .tituloEjemplo {
+        font-size: 13px;
+        font-style: italic;
+        color: rgb(71, 71, 71);
+    }
+
+    .botonEjemplo {
+        display: block;
+        margin: 10px 0px;
+        padding: 10px;
+    }
+
+    .observacion{
+        margin: 10px 0px;
+        font-style: italic;
+    }
+    .conclusion {
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 10px 5px;
+    width: min(90%, 500px);
+    background-color: rgb(209, 127, 33);
+    }
+
+    .subrayado{
+        border-bottom: 2px solid chocolate;
+    }
+    .informacion{
+        background-color: #86b2c8;
+        padding: 15px;
+        width: fit-content;
+        border-radius: 15px;
+        width: min(600px, 90%);
+        margin: 0px auto;
+        font-size: 14px;
+        font-style: italic;
+    }
+
+    .ecuacion{
+        margin: 10px 3px;
+    }
+    
+
+    .nota {
+        background-color: rgb(233, 185, 150);
+        border-radius: 15px;
+        padding: 15px;
+        margin: 10px auto;
+        width: min(650px, 90%);
+    }
+</style>
