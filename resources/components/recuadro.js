@@ -13,6 +13,9 @@ const recuadroComponent={
         descubrimiento(){
             return this.tipo==='descubrimiento'
         },
+                instruccion(){
+            return this.tipo==='instruccion'
+        },
         instruccionPointer(){
             return this.tipo==='instruccionPointer'
         },
@@ -33,5 +36,5 @@ const recuadroComponent={
 
         }
     },
-    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo, descubrimiento, instruccionPointer, instruccionTeclado}"> <img class="iconoRecuadro" :src="srcIcono" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
+    template:'<div class="recuadro" :class="{datoPrevio, datoNuevo, descubrimiento, instruccion, instruccionPointer, instruccionTeclado}"> <img class="iconoRecuadro" :src="srcIcono" /> <div class="textoRecuadro"> <slot></slot> </div> </div>',    
 }
