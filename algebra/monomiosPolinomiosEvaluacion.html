@@ -8,9 +8,6 @@
 
     <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
 
-    <script id="MathJax-script" async
-        src="http://192.168.1.100:3000/public/resources/libraries/MathJax/mathjax.js"></script>
-
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/bloque.js"></script>
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/enlace.js"></script>
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/recuadro.js"></script>
@@ -21,20 +18,24 @@
     <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/enlaceEstilo.css">
 
 
-    <title>Identidad algebraica - evaluación</title>
+    <title>Monomios y polinomios - evaluación</title>
 </head>
 
 <body>
     <div id="doc">
-        <p>Comprendo el concepto de identidad algebraica si: </p>
+        <p>Comprendo los conceptos de monomio y polinomio si: </p>
 
-        <bloque-component tipo="evaluacion" textoCabecera="Puedo explicar qué significa que dos expresiones algebraicas sean idénticas.">
 
+        <bloque-component tipo="evaluacion" textoCabecera="Dada cualquier expresión algebráica puedo decidir si se trata de un polinomio o no.">
+            
         </bloque-component>
 
-        <bloque-component tipo="evaluacion"
-            textoCabecera="Dada cualquier expresión algebraica puedo pensar y escribir una expresión algebraica idéntica.">
+        <bloque-component tipo="evaluacion" textoCabecera="Dado cualquier polinomio puedo identificar los monomios que lo conforman."> 
+            
+        </bloque-component>
 
+        <bloque-component tipo="evaluacion" textoCabecera="Dado cualquier polinomio puedo decidir si recibe un nombre especial y cuál es este.">
+            
         </bloque-component>
     </div>
 </body>
@@ -42,12 +43,17 @@
 </html>
 
 <script>
-    const app = new Vue({
+    const doc = new Vue({
         el: "#doc",
         components: {
             recuadroComponent,
             bloqueComponent,
             enlaceComponent
         },
+        data() {
+            return {
+
+            }
+        }
     })
 </script>

@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
-
     <script id="MathJax-script" async
         src="http://192.168.1.100:3000/public/resources/libraries/MathJax/mathjax.js"></script>
+    <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
 
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/bloque.js"></script>
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/enlace.js"></script>
@@ -20,34 +19,50 @@
     <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/bloqueEstilo.css">
     <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/enlaceEstilo.css">
 
-
-    <title>Identidad algebraica - evaluación</title>
+    <title>Conmutatividad</title>
 </head>
 
 <body>
+
     <div id="doc">
-        <p>Comprendo el concepto de identidad algebraica si: </p>
+        <p>
+            Algunas operaciones aritméticas resultan en el mismo número si se conmutan los números operados.
+        </p>
 
-        <bloque-component tipo="evaluacion" textoCabecera="Puedo explicar qué significa que dos expresiones algebraicas sean idénticas.">
+        <recuadro-component tipo="datoPrevio">
+            De un operacion aritmética que produce el mismo resultado cuando es conmutada, se dice:
+            <ul>
+                <li>
+                    Es una operacion conmutativa.
+                </li>
+                <li>
+                    Es una operación que tiene conmutatividad.
+                </li>
+            </ul>
+        </recuadro-component>
 
-        </bloque-component>
-
-        <bloque-component tipo="evaluacion"
-            textoCabecera="Dada cualquier expresión algebraica puedo pensar y escribir una expresión algebraica idéntica.">
-
-        </bloque-component>
     </div>
 </body>
 
 </html>
 
 <script>
-    const app = new Vue({
+    const doc = new Vue({
         el: "#doc",
         components: {
             recuadroComponent,
             bloqueComponent,
             enlaceComponent
         },
+        data() {
+            return {
+               
+            }
+        },
+        
     })
 </script>
+
+<style>
+    
+</style>

@@ -8,8 +8,6 @@
 
     <script src="http://192.168.1.100:3000/public/resources/libraries/vue.js"></script>
 
-    <script id="MathJax-script" async
-        src="http://192.168.1.100:3000/public/resources/libraries/MathJax/mathjax.js"></script>
 
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/bloque.js"></script>
     <script src="http://192.168.1.100:3000/public/atlasConocimiento/components/enlace.js"></script>
@@ -20,34 +18,61 @@
     <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/bloqueEstilo.css">
     <link rel="stylesheet" href="http://192.168.1.100:3000/public/atlasConocimiento/components/enlaceEstilo.css">
 
-
-    <title>Identidad algebraica - evaluación</title>
+    <title>Calculista básico</title>
 </head>
 
 <body>
+
     <div id="doc">
-        <p>Comprendo el concepto de identidad algebraica si: </p>
+        <p>Las cuatro operaciones basicas con números son:</p>
 
-        <bloque-component tipo="evaluacion" textoCabecera="Puedo explicar qué significa que dos expresiones algebraicas sean idénticas.">
+        <ul>
+            <li>Suma.</li>
+            <li>Resta.</li>
+            <li>Multiplicación.</li>
+            <li>División.</li>
+        </ul>
 
-        </bloque-component>
-
-        <bloque-component tipo="evaluacion"
-            textoCabecera="Dada cualquier expresión algebraica puedo pensar y escribir una expresión algebraica idéntica.">
-
-        </bloque-component>
+        <recuadro-component tipo="datoPrevio">
+            Un calculista básico es alguien que puede resolver cualquiera de estas operaciones con cualquier par de números naturales.
+        </recuadro-component>
+        
     </div>
 </body>
 
 </html>
 
 <script>
-    const app = new Vue({
+    const doc = new Vue({
         el: "#doc",
         components: {
             recuadroComponent,
             bloqueComponent,
             enlaceComponent
         },
+        data() {
+            return {
+            }
+        },
+
     })
 </script>
+
+<style>
+    body {
+        padding: 2% 5%;
+    }
+
+    .nota {
+        margin: 5px auto;
+        border-radius: 15px;
+        background-color: rgb(233, 185, 150);
+        padding: 15px;
+        width: min(600px, 90%);
+    }
+
+    .resaltado {
+        padding: 2px 3px;
+        border-radius: 2px;
+    }
+</style>
